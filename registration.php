@@ -166,7 +166,7 @@
                     <input type="password" class="rq-form-control reverse" name="cpassword" placeholder="Re - Password" required>
                   </div>
                       <div class="col-md-12">
-                          <h3 style="color: red"><?php echo $error; ?></h3>
+                          <h4 style="color: <?php echo $added? "green":"red"; ?> "> <?php echo $status; ?> </h4>
                       </div>
                   <div class="col-md-12">
                     <div class="register-button">
