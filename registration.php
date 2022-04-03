@@ -1,3 +1,4 @@
+<?php include "apis/register.php"; ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -49,7 +50,7 @@
                   <li><a href="about-us.html">About us</a></li>
                   <li><a href="contact-us.html">Contact us</a></li>
                 </li>
-                <li class="login-register-link right-side-link"><a href="registration.html">
+                <li class="login-register-link right-side-link"><a href="registration.php">
                     <i class="icon_lock-open_alt"></i>Login</a>
                 </li>
                 <li class="dropdown right-side-link">
@@ -147,26 +148,29 @@
                 <form class="form-horizontal"  action="#" method="post" >
                   <div class="row">
                     <div class="col-md-4">
-                      <input type="text" class="rq-form-control reverse" placeholder="Name" required>
+                      <input type="text" class="rq-form-control reverse" name="name" placeholder="Name" required>
                     </div>
                   <div class="col-md-4">
-                    <input type="text" class="rq-form-control reverse" placeholder="Username" required>
+                    <input type="text" class="rq-form-control reverse" name="username" placeholder="Username" required>
                   </div>
                   <div class="col-md-4">
-                    <input type="password" class="rq-form-control reverse" placeholder="Password" required>
+                    <input type="password" class="rq-form-control reverse" name="password" placeholder="Password" required>
                   </div>
                   <div class="col-md-4">
-                    <input type="email" class="rq-form-control reverse" placeholder="Email Address" required>
+                    <input type="email" class="rq-form-control reverse" name="email" placeholder="Email Address" required>
                   </div>
                   <div class="col-md-4">
-                    <input type="text" class="rq-form-control reverse" placeholder="Phone" required>
+                    <input type="text" class="rq-form-control reverse" name="phone" placeholder="Phone" required>
                   </div>
                   <div class="col-md-4">
-                    <input type="password" class="rq-form-control reverse" placeholder="Re - Password" required>
+                    <input type="password" class="rq-form-control reverse" name="cpassword" placeholder="Re - Password" required>
                   </div>
+                      <div class="col-md-12">
+                          <h4 style="color: <?php echo $added? "green":"red"; ?> "> <?php echo $status; ?> </h4>
+                      </div>
                   <div class="col-md-12">
                     <div class="register-button">
-                      <button type="submit" class="rq-btn rq-btn-primary border-radius">Register <i class="arrow_right"></i></button>
+                      <button type="submit" name="register" class="rq-btn rq-btn-primary border-radius">Register <i class="arrow_right"></i></button>
                     </div>
                   </div>
                   </div> <!-- end of registration section -->
