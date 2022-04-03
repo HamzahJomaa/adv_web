@@ -1,4 +1,4 @@
-
+<?php include "apis/register.php"; ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -145,7 +145,7 @@
                   <li>Track your payment easily at your profile page</li>
                   <li>Quick registration for facebook, twitter and with Google+</li>
                 </ul>
-                <form class="form-horizontal"  action="apis/register.php" method="post" >
+                <form class="form-horizontal"  action="#" method="post" >
                   <div class="row">
                     <div class="col-md-4">
                       <input type="text" class="rq-form-control reverse" name="name" placeholder="Name" required>
@@ -165,6 +165,9 @@
                   <div class="col-md-4">
                     <input type="password" class="rq-form-control reverse" name="cpassword" placeholder="Re - Password" required>
                   </div>
+                      <div class="col-md-12">
+                          <h3 style="color: red"><?php echo $error; ?></h3>
+                      </div>
                   <div class="col-md-12">
                     <div class="register-button">
                       <button type="submit" name="register" class="rq-btn rq-btn-primary border-radius">Register <i class="arrow_right"></i></button>
