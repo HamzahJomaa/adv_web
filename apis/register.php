@@ -2,7 +2,8 @@
 
 include "connection.php";
 
-$error = "";
+$status = "";
+$add = 0;
 
 if (isset($_POST["register"])){
 
@@ -20,7 +21,11 @@ if (isset($_POST["register"])){
     $insert_query->bind_param("ssssi",$name,$username,$email,$hashedPassword,$phone);
 
     if (!$insert_query->execute()){
-        $error = $connection->error;
+        $status = $connection->error;
+        $added = 0;
+    }else{
+        $status = "User Registered Successfully";
+        $added = 1;
     }
 }
 
