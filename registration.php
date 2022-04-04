@@ -1,4 +1,4 @@
-<?php include "apis/register.php"; ?>
+<?php include "apis/Authentication.php"; ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -166,7 +166,7 @@
                     <input type="password" class="rq-form-control reverse" name="cpassword" placeholder="Re - Password" required>
                   </div>
                       <div class="col-md-12">
-                          <h4 style="color: <?php echo $added? "green":"red"; ?> "> <?php echo $status; ?> </h4>
+                          <h4 style="color: <?php echo $added? "green":"red"; ?> "> <?php echo $statusMessage; ?> </h4>
                       </div>
                   <div class="col-md-12">
                     <div class="register-button">
