@@ -201,11 +201,11 @@
               <div class="col-md-3 col-sm-3">
                 <div class="widget-list">
                   <ul>
-                    <li><a href="#">Site map</a></li>
+                    <!-- <li><a href="#">Site map</a></li> -->
                     <li><a href="#">Terms & Conditions</a></li>
                     <li><a href="#">Privacy Policy</a></li>
                     <li><a href="#">Help</a></li>
-                    <li><a href="#">Affiliate</a></li>
+                    <!-- <li><a href="#">Affiliate</a></li> -->
                   </ul>
                 </div>
               </div>
@@ -220,7 +220,7 @@
                 </div>
               </div>
               <div class="col-md-3 col-sm-3">
-                <div class="widget-list">
+                <!-- <div class="widget-list">
                   <ul class="address">
                     <li><a href="#">FAQs</a></li>
                     <li><a href="#">Blog</a></li>
@@ -228,7 +228,7 @@
                     <li><a href="#">Location</a></li>
                     <li><a href="#">Press</a></li>
                   </ul>
-                </div>
+                </div> -->
               </div>
               <div class="col-md-3 col-sm-3">
                 <div class="widget-list">
