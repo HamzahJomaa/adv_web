@@ -1,3 +1,10 @@
+<?php
+session_start();
+$userid = $_SESSION["userid"];
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -118,21 +125,27 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand" href="index.html"><img src="./img/company-logo.png" alt=""/></a>
+              <a class="navbar-brand" href="index.php"><img src="./img/company-logo.png" alt=""/></a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown active">
-                  <li><a href="index.html">Home</a></li>
+                  <li><a href="index.php">Home</a></li>
                   <li><a href="car-listing-grid.html">Car Listing</a></li>
                   <li><a href="about-us.html">About Us</a></li>
                   <li><a href="contact-us.html">Contact us</a></li>
                 </li>
-                <li class="login-register-link right-side-link"><a href="registration.php">
-                    <i class="icon_lock-open_alt"></i>Login</a>
-                </li>
+                  <?php if (isset($userid)){ ?>
+                      <li class="login-register-link right-side-link"><a href="account.php">
+                              <i class="icon_profile"></i>Account</a>
+                      </li>
+                  <?php } else { ?>
+                      <li class="login-register-link right-side-link"><a href="registration.php">
+                              <i class="icon_lock-open_alt"></i>Login</a>
+                      </li>
+                  <?php } ?>
                 <!-- <li class="dropdown right-side-link">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                                                              aria-haspopup="true" aria-expanded="false">ENG<span class="ion-chevron-down"></span></a>

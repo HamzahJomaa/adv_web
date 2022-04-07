@@ -3,7 +3,8 @@
 include "connection.php";
 
 $statusMessage = "";
-$add = 0;
+$added = 0;
+$loginMessage = "";
 
 if (isset($_POST["register"])) {
 
@@ -39,9 +40,19 @@ if (isset($_POST["register"])) {
 
 
 if (isset($_POST["login"])){
-    $username = $_POST["username"];
+    $email = $_POST["email"];
     $password = $_POST["password"];
 
+    $sql = " SELECT userid,password FROM user WHERE email='" . $email . "' OR username='" . $email . "'";
+    $result = $connection->query($sql);
+
+    $user = $result->fetch_array();
+
+    if (password_verify($password,$user["password"])){
+        $_SESSION["userid"] = $user["userid"];
+    }else{
+        $loginMessage = "Wrong Password";
+    }
 
 }
 ?>
