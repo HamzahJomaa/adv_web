@@ -22,8 +22,8 @@ $userid = $_SESSION["userid"];
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown active">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="car-listing-grid.html">Car listing</a></li>
+                    <li><a href="index.php">Home</a></li>
+                    <li><a href="cars.php">Car listing</a></li>
                     <li><a href="about-us.html">About us</a></li>
                     <li><a href="contact-us.html">Contact us</a></li>
                     </li>

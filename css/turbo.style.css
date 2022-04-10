@@ -20239,6 +20239,7 @@ body .ui-tooltip {
 	display: flex;
 	flex-direction: row;
 	align-items: flex-start;
+	justify-content: space-around;
 	border-radius: 2px;
 	box-shadow: 0 0 28px 5px rgba(0, 0, 0, .3);
 	margin-top: 25px;
@@ -22519,7 +22520,7 @@ h1.rq-title {
 }
 
 .rq-single-post-header .author-info-content .author-name {
-	display: block;
+	display: flex;
 	font-size: 18px
 }
 
@@ -22528,6 +22529,13 @@ h1.rq-title {
 	color: #000;
 	font-weight: 600;
 	line-height: 26px
+}
+
+.rq-single-post-header .author-info-content .author-name p {
+	text-transform: capitalize;
+	font-weight: 300;
+	font-size: 12px;
+	margin-left: 1rem;
 }
 
 .rq-single-post-header .author-info-content .author-role {
@@ -24602,7 +24610,7 @@ textarea.contact-form-input {
 	box-shadow: none
 }
 
-.rq-listing-top-bar-filter-option .filter-single .btn-group button {
+.rq-listing-top-bar-filter-option .filter-single .btn-group button, .rq-listing-top-bar-filter-option .filter-single .btn-group select {
 	border: 0;
 	background: 0 0;
 	margin-right: 40px;

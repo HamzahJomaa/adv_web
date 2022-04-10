@@ -1,509 +1,656 @@
 <?php
 require "apis/connection.php";
 $id = $_GET["id"];
-if (!isset($id)){
-  header("HTTP/1.0 404 Not Found");
-  die();
+$userid = $_SESSION["userid"];
+
+if (!isset($id)) {
+ header("HTTP/1.0 404 Not Found");
+ die();
 }
 
-$car_sql = " SELECT * FROM cars WHERE carid='". $id ."'";
+
+
+$car_sql = " SELECT * FROM cars WHERE carid='" . $id . "'";
 $result_car = $connection->query($car_sql);
 $car = $result_car->fetch_array();
 
-$review_sql = "SELECT rating,review,user.name FROM reviews INNER JOIN user on user.userid = reviews.userid WHERE carid='". $id ."'";
-$result_review = $connection->query($review_sql);
 
+$review_count_sql = " SELECT COUNT(*) as review_count FROM reviews WHERE carid='" . $id . "'";
+$result_count = $connection->query($review_count_sql);
+$review_count = $result_count->fetch_array();
+
+
+$review_sql = "SELECT rating,review,user.name,date FROM reviews INNER JOIN user on user.userid = reviews.userid WHERE carid='" . $id . "'";
+$result_review = $connection->query($review_sql);
 
 $statusMessage = "";
 $added = 0;
 
-if (isset($_POST["add-review"])){
-  $reviewtext = $_POST["review-text"];
-  $userid = $_SESSION["userid"];
-  $date = date("Y-m-d h:i:s");
-  $rating = 4;
-  $insert_query = $connection->prepare("INSERT INTO `reviews`(`carid`, `userid`, `rating`, `review`, `date`) VALUES (?,?,?,?,?)");
-  $insert_query->bind_param("sssss", $id, $userid, $rating, $reviewtext, $date);
-  if (!$insert_query->execute()) {
-    die($connection->error);
-    $statusMessage = $connection->error;
-    $added = 0;
-  } else {
-    $statusMessage = "Review Added Successfully";
-    $added = 1;
-  }
+if (isset($_POST["add-review"])) {
+ $reviewtext = $_POST["review-text"];
+ $date = date("Y-m-d h:i:s");
+ $rating = 4;
+ $insert_query = $connection->prepare("INSERT INTO `reviews`(`carid`, `userid`, `rating`, `review`, `date`) VALUES (?,?,?,?,?)");
+ $insert_query->bind_param("sssss", $id, $userid, $rating, $reviewtext, $date);
+ if (!$insert_query->execute()) {
+  die($connection->error);
+  $statusMessage = $connection->error;
+  $added = 0;
+ } else {
+  $statusMessage = "Review Added Successfully";
+  $added = 1;
+ }
 }
 
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Listing details</title>
     <!-- Main style -->
     <link rel="stylesheet" href="css/turbo.style.css">
-    <link href="http://www.cssscript.com/wp-includes/css/sticky.css" rel="stylesheet" type="text/css">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-  </head>
-  <body>
-    <div id="fakeloader">
-      <div class="spinner5">
+</head>
+<body>
+<div id="fakeloader">
+    <div class="spinner5">
         <div class="cube1"></div>
         <div class="cube2"></div>
-      </div>
     </div>
-    <div id="main-wrapper">
-      <?php include "partials/header.php"; ?>
+</div>
+<div id="main-wrapper">
+ <?php include "partials/header.php"; ?>
 
-      <div class="rq-page-content"> <!-- start of page content -->
+    <div class="rq-page-content"> <!-- start of page content -->
         <div class="rq-listing-details">
-          <div class="rq-listing-single"> <!-- start of banner slider -->
-            <div class="rq-listing-gallery-post">
-              <div class="rq-gallery-content">
-                <div class="details-slider owl-carousel">
-                  <div class="item">
-                    <img src="img/listing-detail2.png" alt="">
-                  </div>
-                  <div class="item">
-                    <img src="img/listing-detail.png" alt="">
-                  </div>
-                  <div class="item">
-                    <img src="img/listing-detail2.png" alt="">
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div> <!-- end of banner slider -->
-          <div class="rq-content-block">
-            <div class="container">
-              <div class="rq-title-container bredcrumb-title text-center"> <!-- start of breadcrumb -->
-                <h1 class="rq-title light"><?php echo $car["carname"]; ?></h1>
-                <ol class="breadcrumb secondary rq-subtitle">
-                  <li><a href="index.php">Home</a></li>
-                  <li><a href="./cars.php">Car listing</a></li>
-                  <li class="active">Car Listing Details</li>
-                </ol>
-              </div> <!-- end of breadcrumb -->
-              <div class="rq-listing-promo-wrapper">
-                <div class="row"> <!-- start of listing promo -->
-                  <div class="col-md-12">
-                    <div class="rq-listing-promo-content">
-                      <div class="rq-listing-item">
-                        <img src="img/listing-icon1.png" alt="">
-                        <h6 class="rq-listing-item-title">Mileage</h6>
-                        <h4 class="rq-listing-item-number"><?php echo $car["mileage"]; ?></h4>
-                      </div>
-                      <div class="rq-listing-item">
-                        <img src="img/listing-icon2.png" alt="">
-                        <h6 class="rq-listing-item-title">Transmission</h6>
-                        <h4 class="rq-listing-item-number"><?php if ($car["transmission"]) { echo "Automatic"; } else { echo "Manual"; } ?></h4>
-                      </div>
-                      <div class="rq-listing-item">
-                        <img src="img/listing-icon3.png" alt="">
-                        <h6 class="rq-listing-item-title">Seats</h6>
-                        <h4 class="rq-listing-item-number"><?php echo $car["seats"]; ?> Adults</h4>
-                      </div>
-                      <div class="rq-listing-item">
-                        <img src="img/listing-icon4.png" alt="">
-                        <h6 class="rq-listing-item-title">Luggage</h6>
-                        <h4 class="rq-listing-item-number"><?php echo $car["luggage"]; ?> Bags</h4>
-                      </div>
-                      <div class="rq-listing-item">
-                        <img src="img/listing-icon5.png" alt="">
-                        <h6 class="rq-listing-item-title">Fuel</h6>
-                        <h4 class="rq-listing-item-number"><?php echo $car["fuel"]; ?></h4>
-                      </div>
-                    </div>
-                  </div>
-                </div> <!-- end of listing promo -->
-              </div>
-              <div class="rq-feature-tab">
-                <div class="rq-blog-listing">
-                  <!-- Nav tabs -->
-                  <ul class="nav nav-tabs" role="tablist">
-                    <li role="presentation" class="active"><a href="#listing_tab_hor_1" aria-controls="listing_tab_hor_1" role="tab" data-toggle="tab">Features</a></li>
-                    <li role="presentation" ><a href="#listing_tab_hor_2" aria-controls="listing_tab_hor_2" role="tab" data-toggle="tab">Descriptions</a></li>
-                    <li role="presentation"><a href="#listing_tab_hor_3" aria-controls="listing_tab_hor_3" role="tab" data-toggle="tab">Reviews(1)</a></li>
-                  </ul>
-                  <!-- Tab panes -->
-                  <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane active" id="listing_tab_hor_1">
-                      <ul class="rq-listing-lists">
-                        <li class="checked">Airconditions</li>
-                        <li class="unchecked">Child Seats</li>
-                        <li class="checked">GPS</li>
-                        <li class="checked">Language</li>
-                        <li class="checked">Music</li>
-                        <li class="checked">Seat Belts</li>
-                        <li class="checked">Sleeping bags</li>
-                        <li class="checked">Water</li>
-                        <li class="checked">Bluetooth</li>
-                        <li class="unchecked">Onboard computer</li>
-                        <li class="checked">Audio Input</li>
-                        <li class="unchecked">Long term tips</li>
-                        <li class="checked">car kit</li>
-                        <li class="checked">Remote central looking</li>
-                        <li class="checked">climate control</li>
-                      </ul>
-                    </div>
-                    <div role="tabpanel" class="tab-pane" id="listing_tab_hor_2">
-                      <p><?php echo $car["descripton"]; ?></p>
-                    </div>
-                    <div role="tabpanel" class="tab-pane" id="listing_tab_hor_3">
-                      <div class="rq-single-post-header">
-                      <?php while ($row = $result_review -> fetch_row()) { ?>
-                        <div class="author-info-content">
-                          <span class="author-role"><?php var_dump($row); ?></span>
-                        </div>
-                      <?php } ?>
-                      </div>
-                      <div class="review-form">
-                        <div id="respond" class="comment-respond">
-                          <form id="commentform" class="commentform" action="#" method="POST">
-                            <div class="row">
-                              <div class="col-md-12">
-                                <textarea class="comment-input" name="review-text" placeholder="Here goes your review"></textarea>
-                              </div>
-                              <div class="col-md-12">
-                                <button name="add-review" class="continue-btn rq-btn rq-btn-normal">Submit Review</button>
-                              </div>
+            <div class="rq-listing-single"> <!-- start of banner slider -->
+                <div class="rq-listing-gallery-post">
+                    <div class="rq-gallery-content">
+                        <div class="details-slider owl-carousel">
+                            <div class="item">
+                                <img src="img/listing-detail2.png" alt="">
                             </div>
-                          </form>
+                            <div class="item">
+                                <img src="img/listing-detail.png" alt="">
+                            </div>
+                            <div class="item">
+                                <img src="img/listing-detail2.png" alt="">
+                            </div>
                         </div>
-                      </div>
                     </div>
-                  </div>
                 </div>
-              </div>  <!-- ./edn feature tab -->
-              <div class="location-map">
-                <div class="listing-page-title">
-                  <h3>Location</h3>
-                </div>
-                <div class="rq-contact-us-map"> <!-- start map portion -->
-                  <div id="listing-map"></div>
-                </div> <!-- end map portion -->
+            </div> <!-- end of banner slider -->
+            <div class="rq-content-block">
+                <div class="container">
+                    <div class="rq-title-container bredcrumb-title text-center"> <!-- start of breadcrumb -->
+                        <h1 class="rq-title light"><?php echo $car["carname"]; ?></h1>
+                        <ol class="breadcrumb secondary rq-subtitle">
+                            <li><a href="index.php">Home</a></li>
+                            <li><a href="./cars.php">Car listing</a></li>
+                            <li class="active">Car Listing Details</li>
+                        </ol>
+                    </div> <!-- end of breadcrumb -->
+                    <div class="rq-listing-promo-wrapper">
+                        <div class="row"> <!-- start of listing promo -->
+                            <div class="col-md-12">
+                                <div class="rq-listing-promo-content">
+                                    <div class="rq-listing-item">
+                                        <img src="img/listing-icon1.png" alt="">
+                                        <h6 class="rq-listing-item-title">Mileage</h6>
+                                        <h4 class="rq-listing-item-number"><?php echo $car["mileage"]; ?></h4>
+                                    </div>
+                                    <div class="rq-listing-item">
+                                        <img src="img/listing-icon2.png" alt="">
+                                        <h6 class="rq-listing-item-title">Transmission</h6>
+                                        <h4 class="rq-listing-item-number"><?php if ($car["transmission"]) {
+                                          echo "Automatic";
+                                         } else {
+                                          echo "Manual";
+                                         } ?></h4>
+                                    </div>
+                                    <div class="rq-listing-item">
+                                        <img src="img/listing-icon3.png" alt="">
+                                        <h6 class="rq-listing-item-title">Seats</h6>
+                                        <h4 class="rq-listing-item-number"><?php echo $car["seats"]; ?> Adults</h4>
+                                    </div>
+                                    <div class="rq-listing-item">
+                                        <img src="img/listing-icon4.png" alt="">
+                                        <h6 class="rq-listing-item-title">Luggage</h6>
+                                        <h4 class="rq-listing-item-number"><?php echo $car["luggage"]; ?> Bags</h4>
+                                    </div>
+                                    <div class="rq-listing-item">
+                                        <img src="img/listing-icon5.png" alt="">
+                                        <h6 class="rq-listing-item-title">Fuel</h6>
+                                        <h4 class="rq-listing-item-number"><?php echo $car["fuel"]; ?></h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!-- end of listing promo -->
+                    </div>
+                    <div class="rq-feature-tab">
+                        <div class="rq-blog-listing">
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#listing_tab_hor_1"
+                                                                          aria-controls="listing_tab_hor_1" role="tab"
+                                                                          data-toggle="tab">Features</a></li>
+                                <li role="presentation"><a href="#listing_tab_hor_2" aria-controls="listing_tab_hor_2"
+                                                           role="tab" data-toggle="tab">Descriptions</a></li>
+                                <li role="presentation"><a href="#listing_tab_hor_3" aria-controls="listing_tab_hor_3"
+                                                           role="tab"
+                                                           data-toggle="tab">Reviews(<?php echo $review_count["review_count"]; ?>
+                                        )</a></li>
+                            </ul>
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane active" id="listing_tab_hor_1">
+                                    <ul class="rq-listing-lists">
+                                        <li class="checked">Airconditions</li>
+                                        <li class="unchecked">Child Seats</li>
+                                        <li class="checked">GPS</li>
+                                        <li class="checked">Language</li>
+                                        <li class="checked">Music</li>
+                                        <li class="checked">Seat Belts</li>
+                                        <li class="checked">Sleeping bags</li>
+                                        <li class="checked">Water</li>
+                                        <li class="checked">Bluetooth</li>
+                                        <li class="unchecked">Onboard computer</li>
+                                        <li class="checked">Audio Input</li>
+                                        <li class="unchecked">Long term tips</li>
+                                        <li class="checked">car kit</li>
+                                        <li class="checked">Remote central looking</li>
+                                        <li class="checked">climate control</li>
+                                    </ul>
+                                </div>
+                                <div role="tabpanel" class="tab-pane" id="listing_tab_hor_2">
+                                    <p><?php echo $car["descripton"]; ?></p>
+                                </div>
+                                <div role="tabpanel" class="tab-pane" id="listing_tab_hor_3">
+                                 <?php while ($row = $result_review->fetch_row()) { ?>
+                                     <div class="rq-single-post-header">
 
-              </div>
-            </div>
-          </div> <!-- .end rq-content-block -->
-          <div class="rq-content-block gray-bg">
-            <div class="container">
-              <div class="listing-page-title">
-                <h3>Book a Car Now</h3>
-              </div>
-              <div class="rq-car-booking-section">
-                <div class="car-search">
-                  <div class="rq-search-container">
-                    <div class="rq-search-single">
-                      <div class="rq-search-content">
-                        <span class="rq-search-heading">Location</span>
-                        <select name="categories" class="category-option">
-                          <option value="0">Pick a location</option>
-                          <option value="1">Manama, Bahrain</option>
-                          <option value="2">Cairo, Egypt</option>
-                          <option value="3">Alexandria, Egypt</option>
-                          <option value="4">Sharm El Sheikh, Egypt</option>
-                          <option value="5">Amman, Jordan</option>
-                          <option value="6">Kuwait City, Kuwait</option>
-                          <option value="7">Beirut, Lebanon</option>
-                          <option value="8">Muscat, Oman</option>
-                          <option value="9">Doha, Qatar</option>
-                          <option value="10">Riyadh, Saudi Arabia</option>
-                          <option value="11">Jeddah, Saudi Arabia</option>
-                          <option value="12">Medina, Saudi Arabia</option>
-                          <option value="13">Ankara, Turkey</option>
-                          <option value="14">Istanbul, Turkey</option>
-                          <option value="15">Abu Dhabi, United Arab Emirates</option>
-                          <option value="16">Dubai, United Arab Emirates</option>
-                        </select>
-                      </div>
+                                         <div class="author-info-content">
+                          <span class="author-name"><a
+                                      href="#"><?php echo $row[2]; ?></a> <p><?php echo date("Y-m-d h:i", strtotime($row[3])); ?></p>
+                            <span>
+                              <i class="ion-android-star<?php if ($row[0] < 1) {
+                               echo "-outline";
+                              } ?>"></i>
+                              <i class="ion-android-star<?php if ($row[0] < 2) {
+                               echo "-outline";
+                              } ?>"></i>
+                              <i class="ion-android-star<?php if ($row[0] < 3) {
+                               echo "-outline";
+                              } ?>"></i>
+                              <i class="ion-android-star<?php if ($row[0] < 4) {
+                               echo "-outline";
+                              } ?>"></i>
+                              <i class="ion-android-star<?php if ($row[0] < 5) {
+                               echo "-outline";
+                              } ?>"></i>
+                            </span>
+                          </span>
+                                             <span class="author-role"><?php echo $row[1]; ?></span>
+                                         </div>
+                                     </div>
+                                 <?php } ?>
+                                    <div class="review-form">
+                                        <div id="respond" class="comment-respond">
+                                            <form id="commentform" class="commentform" action="#" method="POST">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <textarea class="comment-input" name="review-text"
+                                                                  placeholder="Here goes your review"></textarea>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <button <?php if (empty($userid)) { echo "disabled"; }  ?> name="add-review"
+                                                                class="continue-btn rq-btn rq-btn-normal">Submit Review
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>  <!-- ./edn feature tab -->
+                    <div class="location-map">
+                        <div class="listing-page-title">
+                            <h3>Location</h3>
+                        </div>
+                        <div class="rq-contact-us-map"> <!-- start map portion -->
+                            <div id="listing-map"></div>
+                        </div> <!-- end map portion -->
+
                     </div>
-                    <div class="rq-search-single">
-                      <div class="rq-search-content">
-                        <span class="rq-search-heading">Pick up</span>
-                        <input type="text" name="datefilter" class="rq-form-element datepicker" id="startdate" placeholder="Pick up date"/>
-                        <i class="ion-chevron-down datepicker-arrow"></i>
-                      </div>
-                    </div>
-                    <div class="rq-search-single">
-                      <div class="rq-search-content">
-                        <span class="rq-search-heading">Return</span>
-                        <input type="text" name="datefilter" class="rq-form-element" id="enddate" placeholder="Return date"/>
-                        <i class="ion-chevron-down datepicker-arrow"></i>
-                      </div>
-                    </div>
-                    <div class="rq-search-single">
-                      <div class="rq-search-content">
-                        <span class="rq-search-heading">Category</span>
-                        <select name="categories" class="category-option">
-                          <option value="0">Pick a category</option>
-                          <option value="1">Electric</option>
-                          <option value="2">Luxury</option>
-                          <option value="3">Sedan</option>
-                          <option value="4">SUV</option>
-                          <option value="5">Sport</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="rq-search-single">
-                      <div class="rq-search-content last-child">
-                        <span class="rq-search-heading">Additional Person</span>
-                        <select name="categories" class="category-option">
-                          <option value="0">Additional person cost</option>
-                          <option value="1">2 person cost</option>
-                          <option value="2">Person cost</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
                 </div>
-                <div class="booking-details">
-                  <div class="row">
-                    <div class="col-md-5">
-                      <div class="booking-section-single">
-                        <h3 class="section-title">Resources</h3>
-                        <div class="section-adding-option">
+            </div> <!-- .end rq-content-block -->
+            <div class="rq-content-block gray-bg">
+                <div class="container">
+                    <div class="listing-page-title">
+                        <h3>Book a Car Now</h3>
+                    </div>
+                    <div class="rq-car-booking-section">
+                        <div class="car-search">
+                            <div class="rq-search-container">
+                                <div class="rq-search-single">
+                                    <div class="rq-search-content">
+                                        <span class="rq-search-heading">Location</span>
+                                        <select name="categories" id="location" class="category-option">
+                                            <option value="0">Pick a location</option>
+                                            <option value="Manama, Bahrain">Manama, Bahrain</option>
+                                            <option value="Cairo, Egypt">Cairo, Egypt</option>
+                                            <option value="Alexandria, Egypt">Alexandria, Egypt</option>
+                                            <option value="Sharm El Sheikh, Egypt">Sharm El Sheikh, Egypt</option>
+                                            <option value="Amman, Jordan">Amman, Jordan</option>
+                                            <option value="Kuwait City, Kuwait">Kuwait City, Kuwait</option>
+                                            <option value="Beirut, Lebanon">Beirut, Lebanon</option>
+                                            <option value="Muscat, Oman">Muscat, Oman</option>
+                                            <option value="Doha, Qatar">Doha, Qatar</option>
+                                            <option value="Riyadh, Saudi Arabia">Riyadh, Saudi Arabia</option>
+                                            <option value="Jeddah, Saudi Arabia">Jeddah, Saudi Arabia</option>
+                                            <option value="Medina, Saudi Arabia">Medina, Saudi Arabia</option>
+                                            <option value="Ankara, Turkey">Ankara, Turkey</option>
+                                            <option value="Istanbul, Turkey">Istanbul, Turkey</option>
+                                            <option value="Abu Dhabi, United Arab Emirates">Abu Dhabi, United Arab Emirates</option>
+                                            <option value="Dubai, United Arab Emirates">Dubai, United Arab Emirates</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="rq-search-single">
+                                    <div class="rq-search-content">
+                                        <span class="rq-search-heading">Pick up</span>
+                                        <input type="text" name="datefilter" class="rq-form-element datepicker"
+                                               id="startdate" placeholder="Pick up date"/>
+                                        <i class="ion-chevron-down datepicker-arrow"></i>
+                                    </div>
+                                </div>
+                                <div class="rq-search-single">
+                                    <div class="rq-search-content last-child ">
+                                        <span class="rq-search-heading">Return</span>
+                                        <input type="text" name="datefilter" class="rq-form-element" id="enddate"
+                                               placeholder="Return date"/>
+                                        <i class="ion-chevron-down datepicker-arrow"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="booking-details">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="booking-section-single">
+                                        <h3 class="section-title">Resources</h3>
+                                        <div class="section-adding-option">
                           <span class="rq-checkbox-secondary">
                             <input type="checkbox" id="option-one">
                             <label for="option-one">GPS <span>$14.00 - Per Day</span></label>
                           </span>
-                          <span class="rq-checkbox-secondary">
+                                            <span class="rq-checkbox-secondary">
                             <input type="checkbox" id="option-two">
                             <label for="option-two">Child Seat <span>$15.00 - One Time</span></label>
                           </span>
-                          <span class="rq-checkbox-secondary">
+                                            <span class="rq-checkbox-secondary">
                             <input type="checkbox" id="option-three">
                             <label for="option-three">Music <span>$20.00 - One Time</span></label>
                           </span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-1"></div>
-                    <div class="col-md-6">
-                      <div class="booking-section-single">
-                        <h3 class="section-title">Security Deposites</h3>
-                        <div class="section-adding-option">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-1"></div>
+                                <div class="col-md-6">
+                                    <div class="booking-section-single">
+                                        <h3 class="section-title">Security Deposites</h3>
+                                        <div class="section-adding-option">
                           <span class="rq-checkbox-secondary">
                             <input type="checkbox" id="option-four">
                             <label for="option-four">Personal Accident Insurance <span>$10.00 - Per Day</span></label>
                           </span>
-                          <span class="rq-checkbox-secondary">
+                                            <span class="rq-checkbox-secondary">
                             <input type="checkbox" id="option-five">
                             <label for="option-five">CWD (reduce excess fee for 50%) <span> $80.00 - One Time</span></label>
                           </span>
-                          <span class="rq-checkbox-secondary">
+                                            <span class="rq-checkbox-secondary">
                             <input type="checkbox" id="option-six">
                             <label for="option-six"> Another Security Deposit <span>$30.00 - One Time</span></label>
                           </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <h3 class="total-price">Total Booking Cost : <span id="price">$150.00</span></h3>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="book-btn">
+                                        <button <?php echo empty($userid)? "disabled" : ""; ?> id="book" class="rq-btn rq-btn-primary btn-large">Book Now <i
+                                                    class="ion-android-car"></i></button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                      </div>
                     </div>
-                    <div class="col-md-12">
-                      <h3 class="total-price">Total Booking Cost : <span>$150.00</span></h3>
-                    </div>
-                    <div class="col-md-12">
-                      <div class="book-btn">
-                        <button class="rq-btn rq-btn-primary btn-large">Book Now <i class="ion-android-car"></i></button>
-                      </div>
-                    </div>
-                  </div>
                 </div>
-              </div>
-            </div>
-          </div> <!-- /.rq-content-block -->
-          <div class="rq-content-block">
-            <div class="related-car-faq">
-              <div class="container">
+            </div> <!-- /.rq-content-block -->
+            <div class="rq-content-block">
+                <div class="related-car-faq">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h3 class="section-title">Related Cars</h3>
+                                <div class="child-tab-wrapper related-cars">
+                                    <ul class="nav nav-tabs" role="tablist">
+                                        <li>
+                                            <a href="#">
+                                                <img src="img/listing-details-tab/tab-image1.png" alt="">
+                                                <span class="tittle">Lamborghini Aventado 2012</span>
+                                                <span class="car-des">Four Seater Car</span>
+                                                <span class="rent-price">$39.00<b>/Day</b></span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <img src="img/listing-details-tab/tab-image2.png" alt="">
+                                                <span class="tittle">Ford Red Sport Car</span>
+                                                <span class="car-des">Four Seater Car</span>
+                                                <span class="rent-price">$29.00<b>/Day</b></span>
+                                            </a>
+                                        </li>
+                                        <li role="presentation">
+                                            <a href="#car-three" role="tab" data-toggle="tab">
+                                                <img src="img/listing-details-tab/tab-image3.png" alt="">
+                                                <span class="tittle">Kia Rio White Car 2016</span>
+                                                <span class="car-des">Four Seater Car</span>
+                                                <span class="rent-price">$27.00<b>/Day</b></span>
+                                            </a>
+                                        </li>
+                                        <li role="presentation">
+                                            <a href="#car-four" role="tab" data-toggle="tab">
+                                                <img src="img/listing-details-tab/tab-image1.png" alt="">
+                                                <span class="tittle">Kia Rio White Car 2016</span>
+                                                <span class="car-des">Four Seater Car</span>
+                                                <span class="rent-price">$27.00<b>/Day</b></span>
+                                            </a>
+                                        </li>
+                                        <li role="presentation">
+                                            <a href="#car-five" role="tab" data-toggle="tab">
+                                                <img src="img/listing-details-tab/tab-image2.png" alt="">
+                                                <span class="tittle">Kia Rio White Car 2016</span>
+                                                <span class="car-des">Four Seater Car</span>
+                                                <span class="rent-price">$27.00<b>/Day</b></span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h3 class="section-title">FAQs</h3>
+                                <div class="rq-faqs">
+                                    <div class="faq-single">
+                                        <a href="#" class="faq-title">What is Road tax ?</a>
+                                        <p class="hidden-content">
+                                            This is Photoshop's version of Lorem Ipsum. Proin gravida
+                                            nibh vel velit tubo auctor aliquet. Aenean sollicitudin, lorem quis bibendum
+                                            auctor,
+                                            nisi elit exo consequat ipsum, nec sagittis sem nibh id elit.
+                                        </p>
+                                    </div>
+                                    <div class="faq-single">
+                                        <a href="#" class="faq-title">How to use Manual Model of Audi R8?</a>
+                                        <p class="hidden-content">
+                                            This is Photoshop's version of Lorem Ipsum. Proin gravida
+                                            nibh vel velit tubo auctor aliquet. Aenean sollicitudin, lorem quis bibendum
+                                            auctor,
+                                            nisi elit exo consequat ipsum, nec sagittis sem nibh id elit.
+                                        </p>
+                                    </div>
+                                    <div class="faq-single">
+                                        <a href="#" class="faq-title">What’s fees that you have to pay ?</a>
+                                        <p class="hidden-content">
+                                            This is Photoshop's version of Lorem Ipsum. Proin gravida
+                                            nibh vel velit tubo auctor aliquet. Aenean sollicitudin, lorem quis bibendum
+                                            auctor,
+                                            nisi elit exo consequat ipsum, nec sagittis sem nibh id elit.
+                                        </p>
+                                    </div>
+                                    <div class="faq-single">
+                                        <a href="#" class="faq-title">Problems with your car on road ?</a>
+                                        <p class="hidden-content">
+                                            This is Photoshop's version of Lorem Ipsum. Proin gravida
+                                            nibh vel velit tubo auctor aliquet. Aenean sollicitudin, lorem quis bibendum
+                                            auctor,
+                                            nisi elit exo consequat ipsum, nec sagittis sem nibh id elit.
+                                        </p>
+                                    </div>
+                                    <div class="faq-single">
+                                        <a href="#" class="faq-title">How to rent a car from local network?</a>
+                                        <p class="hidden-content">
+                                            This is Photoshop's version of Lorem Ipsum. Proin gravida
+                                            nibh vel velit tubo auctor aliquet. Aenean sollicitudin, lorem quis bibendum
+                                            auctor,
+                                            nisi elit exo consequat ipsum, nec sagittis sem nibh id elit.
+                                        </p>
+                                    </div>
+                                    <div class="faq-single">
+                                        <a href="#" class="faq-title">How long limited to rent car from Turbo on the
+                                            world ?</a>
+                                        <p class="hidden-content">
+                                            This is Photoshop's version of Lorem Ipsum. Proin gravida
+                                            nibh vel velit tubo auctor aliquet. Aenean sollicitudin, lorem quis bibendum
+                                            auctor,
+                                            nisi elit exo consequat ipsum, nec sagittis sem nibh id elit.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- .rq-content-block -->
+        </div>
+    </div> <!-- /.page-content -->
+</div> <!-- end #main-wrapper -->
+<footer class="rq-footer">
+    <div class="rq-main-footer">
+        <div class="container">
+            <button class="toggle-widget">Footer widget</button>
+            <div class="footer-widget">
                 <div class="row">
-                  <div class="col-md-6">
-                    <h3 class="section-title">Related Cars</h3>
-                    <div class="child-tab-wrapper related-cars">
-                      <ul class="nav nav-tabs" role="tablist">
-                        <li>
-                          <a href="#">
-                            <img src="img/listing-details-tab/tab-image1.png" alt="">
-                            <span class="tittle">Lamborghini Aventado 2012</span>
-                            <span class="car-des">Four Seater Car</span>
-                            <span class="rent-price">$39.00<b>/Day</b></span>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#">
-                            <img src="img/listing-details-tab/tab-image2.png" alt="">
-                            <span class="tittle">Ford Red Sport Car</span>
-                            <span class="car-des">Four Seater Car</span>
-                            <span class="rent-price">$29.00<b>/Day</b></span>
-                          </a>
-                        </li>
-                        <li role="presentation">
-                          <a href="#car-three"  role="tab" data-toggle="tab">
-                            <img src="img/listing-details-tab/tab-image3.png" alt="">
-                            <span class="tittle">Kia Rio White Car 2016</span>
-                            <span class="car-des">Four Seater Car</span>
-                            <span class="rent-price">$27.00<b>/Day</b></span>
-                          </a>
-                        </li>
-                        <li role="presentation">
-                          <a href="#car-four"  role="tab" data-toggle="tab">
-                            <img src="img/listing-details-tab/tab-image1.png" alt="">
-                            <span class="tittle">Kia Rio White Car 2016</span>
-                            <span class="car-des">Four Seater Car</span>
-                            <span class="rent-price">$27.00<b>/Day</b></span>
-                          </a>
-                        </li>
-                        <li role="presentation">
-                          <a href="#car-five"  role="tab" data-toggle="tab">
-                            <img src="img/listing-details-tab/tab-image2.png" alt="">
-                            <span class="tittle">Kia Rio White Car 2016</span>
-                            <span class="car-des">Four Seater Car</span>
-                            <span class="rent-price">$27.00<b>/Day</b></span>
-                          </a>
-                        </li>
-                      </ul>
+                    <div class="col-md-3 col-sm-3">
+                        <div class="widget-list">
+                            <ul>
+                                <!-- <li><a href="#">Site map</a></li> -->
+                                <li><a href="#">Terms & Conditions</a></li>
+                                <li><a href="#">Privacy Policy</a></li>
+                                <li><a href="#">Help</a></li>
+                                <!-- <li><a href="#">Affiliate</a></li> -->
+                            </ul>
+                        </div>
                     </div>
-                  </div>
-                  <div class="col-md-6">
-                    <h3 class="section-title">FAQs</h3>
-                    <div class="rq-faqs">
-                      <div class="faq-single">
-                        <a href="#" class="faq-title">What is Road tax ?</a>
-                        <p class="hidden-content">
-                        This is Photoshop's version  of Lorem Ipsum. Proin gravida
-                        nibh vel velit tubo auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor,
-                        nisi elit exo consequat ipsum, nec sagittis sem nibh id elit.
-                        </p>
-                      </div>
-                      <div class="faq-single">
-                        <a href="#" class="faq-title">How to use Manual Model of Audi R8?</a>
-                        <p class="hidden-content">
-                        This is Photoshop's version  of Lorem Ipsum. Proin gravida
-                        nibh vel velit tubo auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor,
-                        nisi elit exo consequat ipsum, nec sagittis sem nibh id elit.
-                        </p>
-                      </div>
-                      <div class="faq-single">
-                        <a href="#" class="faq-title">What’s fees that you have to pay ?</a>
-                        <p class="hidden-content">
-                        This is Photoshop's version  of Lorem Ipsum. Proin gravida
-                        nibh vel velit tubo auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor,
-                        nisi elit exo consequat ipsum, nec sagittis sem nibh id elit.
-                        </p>
-                      </div>
-                      <div class="faq-single">
-                        <a href="#" class="faq-title">Problems with your car on road ?</a>
-                        <p class="hidden-content">
-                        This is Photoshop's version  of Lorem Ipsum. Proin gravida
-                        nibh vel velit tubo auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor,
-                        nisi elit exo consequat ipsum, nec sagittis sem nibh id elit.
-                        </p>
-                      </div>
-                      <div class="faq-single">
-                        <a href="#" class="faq-title">How to rent a car from local network?</a>
-                        <p class="hidden-content">
-                        This is Photoshop's version  of Lorem Ipsum. Proin gravida
-                        nibh vel velit tubo auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor,
-                        nisi elit exo consequat ipsum, nec sagittis sem nibh id elit.
-                        </p>
-                      </div>
-                      <div class="faq-single">
-                        <a href="#" class="faq-title">How long limited to rent car from Turbo on the world ?</a>
-                        <p class="hidden-content">
-                        This is Photoshop's version  of Lorem Ipsum. Proin gravida
-                        nibh vel velit tubo auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor,
-                        nisi elit exo consequat ipsum, nec sagittis sem nibh id elit.
-                        </p>
-                      </div>
+                    <div class="col-md-3 col-sm-3">
+                        <div class="widget-list">
+                            <ul class="address">
+                                <li><a href="#">Our Location</a></li>
+                                <li><a href="#">Career</a></li>
+                                <li><a href="#">About</a></li>
+                                <li><a href="#">Contact</a></li>
+                            </ul>
+                        </div>
                     </div>
-                  </div>
+                    <div class="col-md-3 col-sm-3">
+                        <!-- <div class="widget-list">
+                          <ul class="address">
+                            <li><a href="#">FAQs</a></li>
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">Car Blog</a></li>
+                            <li><a href="#">Location</a></li>
+                            <li><a href="#">Press</a></li>
+                          </ul>
+                        </div> -->
+                    </div>
+                    <div class="col-md-3 col-sm-3">
+                        <div class="widget-list">
+                            <div class="rq-newsletter">
+                                <h5>Sign up for get our newsletter</h5>
+                                <form action="#">
+                                    <input class="fq-newsletter-form" type="text" placeholder="Your Email...">
+                                    <button class="rq-btn" type="submit"><i class="ion-android-send"></i></button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div> <!-- .rq-content-block -->
         </div>
-      </div> <!-- /.page-content -->
-    </div> <!-- end #main-wrapper -->
-    <footer class="rq-footer">
-      <div class="rq-main-footer">
+    </div> <!-- /.rq-main-footer -->
+    <div class="rq-copyright-section">
         <div class="container">
-          <button class="toggle-widget">Footer widget</button>
-          <div class="footer-widget">
-            <div class="row">
-              <div class="col-md-3 col-sm-3">
-                <div class="widget-list">
-                  <ul>
-                    <!-- <li><a href="#">Site map</a></li> -->
-                    <li><a href="#">Terms & Conditions</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Help</a></li>
-                    <!-- <li><a href="#">Affiliate</a></li> -->
-                  </ul>
-                </div>
-              </div>
-              <div class="col-md-3 col-sm-3">
-                <div class="widget-list">
-                  <ul class="address">
-                    <li><a href="#">Our Location</a></li>
-                    <li><a href="#">Career</a></li>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Contact</a></li>
-                  </ul>
-                </div>
-              </div>
-              <div class="col-md-3 col-sm-3">
-                <!-- <div class="widget-list">
-                  <ul class="address">
-                    <li><a href="#">FAQs</a></li>
-                    <li><a href="#">Blog</a></li>
-                    <li><a href="#">Car Blog</a></li>
-                    <li><a href="#">Location</a></li>
-                    <li><a href="#">Press</a></li>
-                  </ul>
-                </div> -->
-              </div>
-              <div class="col-md-3 col-sm-3">
-                <div class="widget-list">
-                  <div class="rq-newsletter">
-                    <h5>Sign up for get our newsletter</h5>
-                    <form action="#">
-                      <input class="fq-newsletter-form" type="text" placeholder="Your Email...">
-                      <button class="rq-btn" type="submit"><i class="ion-android-send"></i></button>
-                    </form>
-                  </div>
-                </div>
-              </div>
+            <div class="copyright-content">
+                <p><a href="#"><img src="img/company-logo.png" alt=""></a> © 2016 <a href="#">Turbo, Inc</a>.</p>
+                <ul class="list-unstyled social-list">
+                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                    <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                    <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                    <li><a href="#"><i class="fa fa-rss"></i></a></li>
+                </ul>
             </div>
-          </div>
         </div>
-      </div> <!-- /.rq-main-footer -->
-      <div class="rq-copyright-section">
-        <div class="container">
-          <div class="copyright-content">
-            <p><a href="#"><img src="img/company-logo.png" alt=""></a> © 2016 <a href="#">Turbo, Inc</a>.</p>
-            <ul class="list-unstyled social-list">
-              <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-              <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-              <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-              <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-              <li><a href="#"><i class="fa fa-rss"></i></a></li>
-            </ul>
-          </div>
-        </div>
-      </div> <!-- /.rq-copyright-section -->
-    </footer>
-    <script type="text/javascript" src="js/jquery.min.js"></script>
-    <script type="text/javascript" src="js/moment.min.js"></script>
-    <script type="text/javascript" src="js/scripts.js" ></script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0QI6vd531_4xsTobCg_J1_6BZOEolRbs&libraries=visualization&callback=initMapListing">
-    </script>
-    <script src="js/mapdetails.js" type="text/javascript"></script>
-  </body>
+    </div> <!-- /.rq-copyright-section -->
+</footer>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/moment.min.js"></script>
+<script type="text/javascript" src="js/scripts.js"></script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0QI6vd531_4xsTobCg_J1_6BZOEolRbs&libraries=visualization&callback=initMapListing">
+</script>
+<script src="js/mapdetails.js" type="text/javascript"></script>
+<script>
+    $(document).ready(function () {
+        let perDay = <?php echo $car[11]; ?> ;
+        let car = <?php echo $id ?>;
+        let user = <?php echo isset($userid) ? $userid : "null"  ?>;
+
+        let price = updatePrice(0, 0);
+
+        let booking = {
+            gps: false,
+            childseat: false,
+            music: false,
+            pei: false,
+            cwd: false,
+            asd: false,
+            checkin: "",
+            checkout: "",
+            days: 0,
+            location: "",
+            total: 0,
+        }
+
+
+        $("#option-one").change(function () {
+            if ($(this).prop("checked")) {
+                booking.total = updatePrice(booking.total, 14)
+            } else {
+                booking.total = updatePrice(booking.total, -14)
+            }
+            booking.gps = !booking.gps
+        })
+
+        $("#option-two").change(function () {
+            if ($(this).prop("checked")) {
+                booking.total = updatePrice(booking.total, 15)
+            } else {
+                booking.total = updatePrice(booking.total, -15)
+            }
+            booking.childseat = !booking.childseat
+        })
+
+        $("#option-three").change(function () {
+            if ($(this).prop("checked")) {
+                booking.total = updatePrice(booking.total, 20)
+            } else {
+                booking.total = updatePrice(booking.total, -20)
+            }
+            booking.music = !booking.music
+        })
+
+        $("#option-four").change(function () {
+            if ($(this).prop("checked")) {
+                booking.total = updatePrice(booking.total, 10)
+            } else {
+                booking.total = updatePrice(booking.total, -10)
+            }
+            booking.pei = !booking.pei
+        })
+
+        $("#option-five").change(function () {
+            if ($(this).prop("checked")) {
+                booking.total = updatePrice(booking.total, 80)
+            } else {
+                booking.total = updatePrice(booking.total, -80)
+            }
+            booking.cwd = !booking.cwd
+        })
+
+        $("#option-six").change(function () {
+            if ($(this).prop("checked")) {
+                booking.total = updatePrice(booking.total, 30)
+            } else {
+                booking.total = updatePrice(booking.total, -30)
+            }
+            booking.asd = !booking.asd
+        })
+
+        $("input#startdate").on("apply.daterangepicker", function () {
+            let start = new Date($("input#startdate").val())
+            let end = new Date($("input#enddate").val())
+            const diffTime = Math.abs(start - end);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            const total = diffDays * perDay
+            if (booking.checkin !== "" && booking.checkout !== ""){
+                const olddiffTime = Math.abs(new Date(booking.checkin) - new Date(booking.checkout));
+                const olddiffDays = Math.ceil(olddiffTime / (1000 * 60 * 60 * 24));
+                const old = olddiffDays * perDay
+                booking.total = updatePrice(booking.total, -1 * old)
+            }
+            booking.total = updatePrice(booking.total, total)
+            booking.checkin = start.getFullYear() + "-" + (start.getMonth()+1) + "-" + start.getDate()
+            booking.checkout = end.getFullYear() + "-" + (end.getMonth()+1) + "-" + end.getDate()
+            booking.days = diffDays
+        })
+
+        $("#location").change(function () {
+            booking.location = $(this).val()
+        })
+
+        $("#book").click(function () {
+            $.ajax("apis/book.php",{
+                method:"POST",
+                data: {booking , car, user}
+            }).success((data)=>{
+                alert("Thank you for your booking, we will contact you soon")
+            }).error((error)=>{
+                alert("An Error Occurred, Please check your browser logs")
+                console.log(JSON.parse(error.responseText))
+            })
+        })
+    })
+
+    const updatePrice = (oldprice, value) => {
+        let priceSection = $("#price")[0]
+        priceSection.innerHTML = `$${oldprice + value}`
+        return oldprice + value
+    }
+</script>
+</body>
 </html>

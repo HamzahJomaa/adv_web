@@ -4,14 +4,51 @@ $page = $_GET["page"];
 if (!isset($page)){
   $page = 1;
 }
-$per_page_record = 12;
-$start_from = ($page-1) * $per_page_record;     
-    
-$sql = "SELECT * FROM cars LIMIT $start_from, $per_page_record";
 
+$per_page_record = 9;
+$start_from = ($page-1) * $per_page_record; 
+
+
+$sql = "SELECT * FROM cars INNER JOIN category on category.categoryid = cars.category";
+
+
+$cat = $_GET["cat"];
+$model = $_GET["model"];
+$type = $_GET["type"];
+
+
+if (isset($cat) || isset($model) || isset($type)){
+  $sql .= " WHERE carid != 0";
+
+  if (isset($cat)){
+    $sql .= " AND category=".$cat."";
+  }
+
+  if (isset($model)){
+    $sql .= " AND model=".$model."";
+  }
+
+  if (isset($type)){
+    $sql .= " AND cartype='".$type."'";
+  }
+  
+}
+
+
+
+$sql .= " LIMIT $start_from, $per_page_record";
 $result = $connection->query($sql);
 
 
+$category_sql = "SELECT * FROM category ";
+$result_category = $connection->query($category_sql);
+
+$model_sql = "SELECT DISTINCT model FROM cars ";
+$model_result = $connection->query($model_sql);
+
+
+$type_sql = "SELECT DISTINCT cartype FROM cars ";
+$cartype_result = $connection->query($type_sql);
 ?>
 
 <!DOCTYPE html>
@@ -57,186 +94,47 @@ $result = $connection->query($sql);
       <div class="rq-page-content">
         <div class="rq-content-block gray-bg small-padding-top">
           <div class="container">
-            <div class="listing-search-container">
-              <h2>Search For<span class="dot">.</span></h2>
-              <div class="rq-search-container with-border">
-                <div class="rq-search-single">
-                  <div class="rq-search-content">
-                    <span class="rq-search-heading">Location</span>
-                    <select name="categories" class="category-option">
-                      <option value="0">Pick a location</option>
-                          <option value="1">Manama, Bahrain</option>
-                          <option value="2">Cairo, Egypt</option>
-                          <option value="3">Alexandria, Egypt</option>
-                          <option value="4">Sharm El Sheikh, Egypt</option>
-                          <option value="5">Amman, Jordan</option>
-                          <option value="6">Kuwait City, Kuwait</option>
-                          <option value="7">Beirut, Lebanon</option>
-                          <option value="8">Muscat, Oman</option>
-                          <option value="9">Doha, Qatar</option>
-                          <option value="10">Riyadh, Saudi Arabia</option>
-                          <option value="11">Jeddah, Saudi Arabia</option>
-                          <option value="12">Medina, Saudi Arabia</option>
-                          <option value="13">Ankara, Turkey</option>
-                          <option value="14">Istanbul, Turkey</option>
-                          <option value="15">Abu Dhabi, United Arab Emirates</option>
-                          <option value="16">Dubai, United Arab Emirates</option>
-                    </select>
+            <form action="#">
+              <div class="rq-listing-top-bar-filter-option">
+                <div class="filter-list">
+                  <h5>Filter by</h5>
+                  <div class="filter-single">
+                    <div class="btn-group">
+                      <select class="btn btn-default dropdown-toggle" name="category" id="category">
+                        <option value=""> Category </option>
+                        <?php while ($category = $result_category->fetch_row()) { ?>
+                          <option <?php if ($cat === $category[0]) { echo "selected"; } ?> value="<?php echo $category[0];?>"> <?php echo $category[1];?> </option>
+                        <?php } ?>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="filter-single">
+                    <div class="btn-group">
+                      <select class="btn btn-default dropdown-toggle" name="model" id="model">
+                        <option value=""> Model </option>
+                        <?php while ($year = $model_result->fetch_row()) { ?>
+                          <option <?php if ($model === $year[0]) { echo "selected"; } ?> value="<?php echo $year[0];?>"> <?php echo $year[0];?> </option>
+                        <?php } ?>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="filter-single">
+                    <div class="btn-group">
+                      <select class="btn btn-default dropdown-toggle" name="type" id="type">
+                        <option value=""> Type </option>
+                        <?php while ($cartype = $cartype_result->fetch_row()) { ?>
+                          <option <?php if ($type === $cartype[0]) { echo "selected"; } ?> value="<?php echo $cartype[0];?>"> <?php echo $cartype[0];?> </option>
+                        <?php } ?>
+                      </select>
+                    </div>
                   </div>
                 </div>
-                <div class="rq-search-single">
-                  <div class="rq-search-content">
-                    <span class="rq-search-heading">Pick up</span>
-                    <input type="text" name="datefilter" class="rq-form-element datepicker" id="startdate" placeholder="Pick up date"/>
-                    <i class="ion-chevron-down datepicker-arrow"></i>
-                  </div>
-                </div>
-                <div class="rq-search-single">
-                  <div class="rq-search-content">
-                    <span class="rq-search-heading">Return</span>
-                    <input type="text" name="datefilter" class="rq-form-element" id="enddate" placeholder="Return date"/>
-                    <i class="ion-chevron-down datepicker-arrow"></i>
-                  </div>
-                </div>
-                <div class="rq-search-single">
-                  <div class="rq-search-content last-child">
-                    <span class="rq-search-heading">Driver age</span>
-                    <select name="categories" class="category-option">
-                      <option value="0">18-21 Years Old</option>
-                      <option value="1">22-25 Years Old</option>
-                      <option value="2">25+ Years old</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="rq-search-single search-btn">
-                  <div class="rq-search-content">
-                    <button class="rq-btn rq-btn-primary fluid-btn">Search <i class="arrow_right"></i></button>
-                  </div>
+                <div class="rq-grid-list-view-option">
+                  <a class="active" href="#" data-class="rq-listing-grid"><i class="ion-grid"></i></a>
+                  <a href="#" data-class="rq-listing-list"><i class="ion-navicon"></i></a>
                 </div>
               </div>
-
-            </div> <!-- /.search-container -->
-            <div class="rq-listing-top-bar-filter-option">
-              <div class="filter-list">
-                <h5>Filter by</h5>
-                <div class="filter-single">
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Brand <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu">
-                      <li>
-                        <span class="rq-checkbox">
-                          <input type="checkbox" id="brand-one">
-                          <label for="brand-one">Ford Shelby</label>
-                        </span>
-                      </li>
-                      <li>
-                        <span class="rq-checkbox">
-                          <input type="checkbox" id="brand-two">
-                          <label for="brand-two">BMW M6 Gran</label>
-                        </span>
-                      </li>
-                      <li>
-                        <span class="rq-checkbox">
-                          <input type="checkbox" id="brand-three">
-                          <label for="brand-three">AUDI R8 2011</label>
-                        </span>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-                <div class="filter-single">
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Class <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu">
-
-                      <li>
-                        <span class="rq-checkbox">
-                          <input type="checkbox" id="class-a">
-                          <label for="class-a">A class</label>
-                        </span>
-                      </li>
-                      <li>
-                        <span class="rq-checkbox">
-                          <input type="checkbox" id="class-b">
-                          <label for="class-b">B class</label>
-                        </span>
-                      </li>
-                      <li>
-                        <span class="rq-checkbox">
-                          <input type="checkbox" id="class-c">
-                          <label for="class-c">C class</label>
-                        </span>
-                      </li>
-                      <li>
-                        <span class="rq-checkbox">
-                          <input type="checkbox" id="class-d">
-                          <label for="class-d">D class</label>
-                        </span>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-                <div class="filter-single">
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Fuel <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu">
-                      <li>
-                        <span class="rq-checkbox">
-                          <input type="checkbox" id="fule-one">
-                          <label for="fule-one">50 liter</label>
-                        </span>
-                      </li>
-                      <li>
-                        <span class="rq-checkbox">
-                          <input type="checkbox" id="fuel-two">
-                          <label for="fuel-two">100 liter</label>
-                        </span>
-                      </li>
-                      <li>
-                        <span class="rq-checkbox">
-                          <input type="checkbox" id="fuel-three">
-                          <label for="fuel-three">120 liter</label>
-                        </span>
-                      </li>
-                      <li>
-                        <span class="rq-checkbox">
-                          <input type="checkbox" id="fuel-four">
-                          <label for="fuel-four">130 liter</label>
-                        </span>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-                <div class="filter-single">
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Price <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu">
-                      <li>
-                        <div class="rq-pricing-slider">
-                          <div id="slider-range"></div>
-                          <p>
-                          <label for="amount">range:</label>
-                          <input type="text" id="amount">
-                          </p>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div class="rq-grid-list-view-option">
-                <a class="active" href="#" data-class="rq-listing-grid"><i class="ion-grid"></i></a>
-                <a href="#" data-class="rq-listing-list"><i class="ion-navicon"></i></a>
-              </div>
-            </div>
+            </form>
 
             <div class="rq-car-listing-wrapper">
               <div class="rq-listing-choose rq-listing-grid">
@@ -245,10 +143,10 @@ $result = $connection->query($sql);
                     <div class="col-md-4 col-sm-6">
                       <div class="listing-single">
                         <div class="listing-img">
-                          <img src="img/information/Sedans/Hyundai Elentra/elentra-front-side-view.jpg" alt="">
+                          <img src="img/cars/<?php  echo $row[12]; ?>" alt="">
                         </div>
                         <div class="listing-details">
-                          <h5 class="car-brand">Hyundai</h5>
+                          <h5 class="car-brand"><?php echo $row[14]; ?></h5>
                           <h3 class="car-name"><a href="#"><?php echo $row[2]; ?></a></h3>
                           <ul class="rating-list">
                             <li><i class="ion-star"></i></li>
@@ -263,12 +161,11 @@ $result = $connection->query($sql);
                             <li>Transmission: <span><?php if ($row[10]) { echo "Automatic"; } else { echo "Manual"; } ?></span></li>
                           </ul>
                           <div class="listing-footer">
-                            <span><a href="car.php?id=<?php echo $row[1]; ?>">Details</a></span>
+                            <span><a href="car.php?id=<?php echo $row[0]; ?>">Details</a></span>
                             <span>
                               Starting at <span class="price">$<?php echo $row[11]; ?></span> / day
                             </span>
                           </div>
-
                         </div>
                       </div>
                     </div>
@@ -372,5 +269,62 @@ $result = $connection->query($sql);
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/moment.min.js"></script>
     <script type="text/javascript" src="js/scripts.js" ></script>
+    <script>
+      $(document).ready(function(){
+        $("#category").change(function(e){
+          if ($(this).val()){
+            location.href = updateQueryStringParameter(location.href,"cat",$(this).val())
+          }else{
+            location.href = removeURLParameter(location.href,"cat")
+          }
+        })
+        $("#model").change(function(e){
+          if ($(this).val()){
+            location.href = updateQueryStringParameter(location.href,"model",$(this).val())
+          }else{
+            location.href = removeURLParameter(location.href,"model")
+          }
+        })
+        $("#type").change(function(e){
+          if ($(this).val()){
+            location.href = updateQueryStringParameter(location.href,"type",$(this).val())
+          }else{
+            location.href = removeURLParameter(location.href,"type")
+          }
+        })
+      })
+
+      function updateQueryStringParameter(uri, key, value) {
+        var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+        var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+        if (uri.match(re)) {
+          return uri.replace(re, '$1' + key + "=" + value + '$2');
+        }
+        else {
+          return uri + separator + key + "=" + value;
+        }
+      }
+
+      function removeURLParameter(url, parameter) {
+          //prefer to use l.search if you have a location/link object
+          var urlparts = url.split('?');   
+          if (urlparts.length >= 2) {
+
+              var prefix = encodeURIComponent(parameter) + '=';
+              var pars = urlparts[1].split(/[&;]/g);
+
+              //reverse iteration as may be destructive
+              for (var i = pars.length; i-- > 0;) {    
+                  //idiom for string.startsWith
+                  if (pars[i].lastIndexOf(prefix, 0) !== -1) {  
+                      pars.splice(i, 1);
+                  }
+              }
+
+              return urlparts[0] + (pars.length > 0 ? '?' + pars.join('&') : '');
+          }
+          return url;
+      }
+    </script>
   </body>
 </html>

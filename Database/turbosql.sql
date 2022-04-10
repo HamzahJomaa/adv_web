@@ -22,6 +22,7 @@ CREATE TABLE IF NOT EXISTS `turbodb`.`cars` (
     `fuel` VARCHAR(25) NOT NULL ,
     `transmission` BOOLEAN NOT NULL ,
     `price` DOUBLE NOT NULL ,
+    `picture` VARCHAR(100) 
     PRIMARY KEY (`carid`)
     ) ENGINE = InnoDB;
 
@@ -68,8 +69,9 @@ CREATE TABLE IF NOT EXISTS `turbodb`.`booking` (
     `userid` INT NOT NULL,
     `carid` INT NOT NULL,
     `checkin` DATE NOT NULL,
-    `checkout` INT NOT NULL,
+    `checkout` DATE NOT NULL,
     `price` FLOAT NOT NULL,
+    `addons` json NOT NULL
     PRIMARY KEY (`bookingid`)
     ) ENGINE = InnoDB;
 
@@ -125,3 +127,15 @@ INSERT INTO `turbodb`.`cars` (`category`, `carname`, `model`, `mileage`, `cartyp
 
 INSERT INTO `turbodb`.`cars` (`category`, `carname`, `model`, `mileage`, `cartype`, `seats`, `luggage`, `descripton`, `fuel`, `transmission`, `price`)
     VALUES (5,'Rolls Royce','2019','124000','Premium','4','2','A unique space, defined by unparalleled comfort. The leather in a Rolls-Royce motor car is unlike any other. It is the finest in the world, giving give our craftspeople the most exquisite material to work with.','Petrol','1','69.00');
+
+
+
+UPDATE `cars` SET `picture` = 'rolls-front-side-view.jpg' WHERE `cars`.`carid` = 9; 
+UPDATE `cars` SET `picture` = 'bentley-front-side-view.jpg' WHERE `cars`.`carid` = 8; 
+UPDATE `cars` SET `picture` = 'wrangler-front-side-view2.jpg' WHERE `cars`.`carid` = 4; 
+UPDATE `cars` SET `picture` = 'ford-front-view.jpg' WHERE `cars`.`carid` = 6; 
+UPDATE `cars` SET `picture` = 'crv-front-side-view2.jpg' WHERE `cars`.`carid` = 5; 
+UPDATE `cars` SET `picture` = 'elentra-front-side-view.jpg' WHERE `cars`.`carid` = 3; 
+UPDATE `cars` SET `picture` = 'porshe-front-side-view.jpg' WHERE `cars`.`carid` = 7; 
+UPDATE `cars` SET `picture` = 'corolla-front-side-view.jpg' WHERE `cars`.`carid` = 2; 
+UPDATE `cars` SET `picture` = 'tesla-x-main-view.jpg' WHERE `cars`.`carid` = 1;
