@@ -22,6 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 
  if (!$insert_query->execute()) {
   $statusMessage = $connection->error;
+  echo $statusMessage;
   $added = 0;
   header('Temporary-Header: True', true, 400);
   print json_encode (array ('error' => 400, 'message' => $statusMessage));

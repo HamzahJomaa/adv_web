@@ -1,17 +1,15 @@
 
 CREATE DATABASE IF NOT EXISTS `turbodb`;
 
-    ----- Category Table -----
 CREATE TABLE IF NOT EXISTS `turbodb`.`category` (
      `categoryid` INT NOT NULL AUTO_INCREMENT ,
      `categoryname` VARCHAR(25) NOT NULL ,
      PRIMARY KEY (`categoryid`)
      ) ENGINE = InnoDB;
 
-    ----- Cars Table -----
 CREATE TABLE IF NOT EXISTS `turbodb`.`cars` (
     `carid` INT NOT NULL AUTO_INCREMENT ,
-    `category` INT NOT NULL , --Foreign key--
+    `category` INT NOT NULL ,
     `carname` VARCHAR(25) NOT NULL ,
     `model` VARCHAR(30) NOT NULL ,
     `mileage` INT NOT NULL ,
@@ -26,7 +24,6 @@ CREATE TABLE IF NOT EXISTS `turbodb`.`cars` (
     PRIMARY KEY (`carid`)
     ) ENGINE = InnoDB;
 
-    ----- User Table -----
 CREATE TABLE IF NOT EXISTS `turbodb`.`user` (
     `userid` INT NOT NULL AUTO_INCREMENT ,
     `name` VARCHAR(50) NOT NULL ,
@@ -38,18 +35,16 @@ CREATE TABLE IF NOT EXISTS `turbodb`.`user` (
     ) ENGINE = InnoDB;
 
 
-    ----- Review Table -----
 CREATE TABLE IF NOT EXISTS `turbodb`.`reviews` (
     `reviewid` INT NOT NULL AUTO_INCREMENT ,
-    `carid` INT NOT NULL , --Foreign key--
-    `userid` INT NOT NULL , --Foreign key--
+    `carid` INT NOT NULL ,
+    `userid` INT NOT NULL ,
     `rating` INT NOT NULL ,
     `review` TEXT NOT NULL ,
     `date` DATETIME NOT NULL ,
     PRIMARY KEY (`reviewid`)
     ) ENGINE = InnoDB;
 
-    ----- Payment Details Table -----
 CREATE TABLE IF NOT EXISTS `turbodb`.`paymentdetails` (
     `paymentid` INT NOT NULL AUTO_INCREMENT,
     `cc_number` INT NOT NULL,
@@ -57,13 +52,12 @@ CREATE TABLE IF NOT EXISTS `turbodb`.`paymentdetails` (
     `cc_name` VARCHAR(100) NOT NULL,
     `cc_code` INT NOT NULL,
     `userid` INT NOT NULL,
-    `address` VARCHAR(70) NOT NULL ,--Foreign key--
+    `address` VARCHAR(70) NOT NULL ,
     `phone` INT NOT NULL ,
     PRIMARY KEY (`paymentid`)
     ) ENGINE = InnoDB;
 
 
-    ----- Booking Details Table -----
 CREATE TABLE IF NOT EXISTS `turbodb`.`booking` (
     `bookingid` INT NOT NULL AUTO_INCREMENT,
     `userid` INT NOT NULL,
@@ -71,7 +65,8 @@ CREATE TABLE IF NOT EXISTS `turbodb`.`booking` (
     `checkin` DATE NOT NULL,
     `checkout` DATE NOT NULL,
     `price` FLOAT NOT NULL,
-    `addons` json NOT NULL
+    `addons` json NOT NULL,
+    `days` INT NOT NULL
     PRIMARY KEY (`bookingid`)
     ) ENGINE = InnoDB;
 
@@ -99,7 +94,6 @@ INSERT INTO `turbodb`.`category` (`categoryname`) VALUES ('SUV');
 INSERT INTO `turbodb`.`category` (`categoryname`) VALUES ('Sports');
 INSERT INTO `turbodb`.`category` (`categoryname`) VALUES ('Luxury');
 
--- Inserting cars --
 
 INSERT INTO `turbodb`.`cars`  (`category`, `carname`, `model`, `mileage`, `cartype`, `seats`, `luggage`, `descripton`, `fuel`, `transmission`, `price`)
     VALUES (1,'Tesla Model X','2021','90000','Premium','7','6','With the most power and quickest acceleration of any SUV, Model X Plaid is the highest performing SUV ever built. All Model X powertrains, with updated battery architecture, can deliver instant torque at any speed.','Electric','1','45.00');
@@ -130,12 +124,12 @@ INSERT INTO `turbodb`.`cars` (`category`, `carname`, `model`, `mileage`, `cartyp
 
 
 
-UPDATE `cars` SET `picture` = 'rolls-front-side-view.jpg' WHERE `cars`.`carid` = 9; 
-UPDATE `cars` SET `picture` = 'bentley-front-side-view.jpg' WHERE `cars`.`carid` = 8; 
-UPDATE `cars` SET `picture` = 'wrangler-front-side-view2.jpg' WHERE `cars`.`carid` = 4; 
-UPDATE `cars` SET `picture` = 'ford-front-view.jpg' WHERE `cars`.`carid` = 6; 
-UPDATE `cars` SET `picture` = 'crv-front-side-view2.jpg' WHERE `cars`.`carid` = 5; 
-UPDATE `cars` SET `picture` = 'elentra-front-side-view.jpg' WHERE `cars`.`carid` = 3; 
-UPDATE `cars` SET `picture` = 'porshe-front-side-view.jpg' WHERE `cars`.`carid` = 7; 
-UPDATE `cars` SET `picture` = 'corolla-front-side-view.jpg' WHERE `cars`.`carid` = 2; 
-UPDATE `cars` SET `picture` = 'tesla-x-main-view.jpg' WHERE `cars`.`carid` = 1;
+UPDATE `turbodb`.`cars` SET `picture` = 'rolls-front-side-view.jpg' WHERE `cars`.`carid` = 9;
+UPDATE `turbodb`.`cars` SET `picture` = 'bentley-front-side-view.jpg' WHERE `cars`.`carid` = 8;
+UPDATE `turbodb`.`cars` SET `picture` = 'wrangler-front-side-view2.jpg' WHERE `cars`.`carid` = 4;
+UPDATE `turbodb`.`cars` SET `picture` = 'ford-front-view.jpg' WHERE `cars`.`carid` = 6;
+UPDATE `turbodb`.`cars` SET `picture` = 'crv-front-side-view2.jpg' WHERE `cars`.`carid` = 5;
+UPDATE `turbodb`.`cars` SET `picture` = 'elentra-front-side-view.jpg' WHERE `cars`.`carid` = 3;
+UPDATE `turbodb`.`cars` SET `picture` = 'porshe-front-side-view.jpg' WHERE `cars`.`carid` = 7;
+UPDATE `turbodb`.`cars` SET `picture` = 'corolla-front-side-view.jpg' WHERE `cars`.`carid` = 2;
+UPDATE `turbodb`.`cars` SET `picture` = 'tesla-x-main-view.jpg' WHERE `cars`.`carid` = 1;

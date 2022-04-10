@@ -641,7 +641,7 @@ if (isset($_POST["add-review"])) {
                 alert("Thank you for your booking, we will contact you soon")
             }).error((error)=>{
                 alert("An Error Occurred, Please check your browser logs")
-                console.log(JSON.parse(error.responseText))
+                console.log(error.responseText)
             })
         })
     })
