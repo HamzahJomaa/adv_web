@@ -1,3 +1,41 @@
+<?php
+require "apis/connection.php";
+$id = $_GET["id"];
+if (!isset($id)){
+  header("HTTP/1.0 404 Not Found");
+  die();
+}
+
+$car_sql = " SELECT * FROM cars WHERE carid='". $id ."'";
+$result_car = $connection->query($car_sql);
+$car = $result_car->fetch_array();
+
+$review_sql = "SELECT rating,review,user.name FROM reviews INNER JOIN user on user.userid = reviews.userid WHERE carid='". $id ."'";
+$result_review = $connection->query($review_sql);
+
+
+$statusMessage = "";
+$added = 0;
+
+if (isset($_POST["add-review"])){
+  $reviewtext = $_POST["review-text"];
+  $userid = $_SESSION["userid"];
+  $date = date("Y-m-d h:i:s");
+  $rating = 4;
+  $insert_query = $connection->prepare("INSERT INTO `reviews`(`carid`, `userid`, `rating`, `review`, `date`) VALUES (?,?,?,?,?)");
+  $insert_query->bind_param("sssss", $id, $userid, $rating, $reviewtext, $date);
+  if (!$insert_query->execute()) {
+    die($connection->error);
+    $statusMessage = $connection->error;
+    $added = 0;
+  } else {
+    $statusMessage = "Review Added Successfully";
+    $added = 1;
+  }
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -7,7 +45,7 @@
     <title>Listing details</title>
     <!-- Main style -->
     <link rel="stylesheet" href="css/turbo.style.css">
-
+    <link href="http://www.cssscript.com/wp-includes/css/sticky.css" rel="stylesheet" type="text/css">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -24,54 +62,7 @@
       </div>
     </div>
     <div id="main-wrapper">
-      <header class="header">
-        <nav class="navbar navbar-default" id="sticker">
-          <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                                                                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
-              <a class="navbar-brand" href="index.php"><img src="./img/company-logo.png" alt=""/></a>
-            </div>
-
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-              <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown active">
-                  <li><a href="index.php">Home</a></li>
-                  <li><a href="car-listing-grid.html">Car Listing</a></li>
-                  <li><a href="about-us.html">About Us</a></li>
-                  <li><a href="contact-us.html">Contact us</a></li>
-                </li>
-                <li class="login-register-link right-side-link"><a href="registration.php">
-                    <i class="icon_lock-open_alt"></i>Login</a>
-                </li>
-                <!-- <li class="dropdown right-side-link">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                                                                             aria-haspopup="true" aria-expanded="false">ENG<span class="ion-chevron-down"></span></a>
-                  <ul class="dropdown-menu with-language">
-                    <li><a href="#">Fr</a></li>
-                    <li><a href="#">De</a></li>
-                  </ul>
-                </li>
-                <li class="dropdown right-side-link last">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                                                                             aria-haspopup="true" aria-expanded="false">USD<span class="ion-chevron-down"></span></a>
-                  <ul class="dropdown-menu with-language">
-                    <li><a href="#">USD</a></li>
-                    <li><a href="#">Eur</a></li>
-                  </ul>
-                </li> -->
-              </ul>
-            </div><!-- /.navbar-collapse -->
-          </div><!-- /.container-fluid -->
-        </nav>
-      </header> <!-- end header -->
+      <?php include "partials/header.php"; ?>
 
       <div class="rq-page-content"> <!-- start of page content -->
         <div class="rq-listing-details">
@@ -95,10 +86,10 @@
           <div class="rq-content-block">
             <div class="container">
               <div class="rq-title-container bredcrumb-title text-center"> <!-- start of breadcrumb -->
-                <h1 class="rq-title light">Car listing detail</h1>
+                <h1 class="rq-title light"><?php echo $car["carname"]; ?></h1>
                 <ol class="breadcrumb secondary rq-subtitle">
                   <li><a href="index.php">Home</a></li>
-                  <li><a href="car-listing-grid.html">Car listing</a></li>
+                  <li><a href="./cars.php">Car listing</a></li>
                   <li class="active">Car Listing Details</li>
                 </ol>
               </div> <!-- end of breadcrumb -->
@@ -109,27 +100,27 @@
                       <div class="rq-listing-item">
                         <img src="img/listing-icon1.png" alt="">
                         <h6 class="rq-listing-item-title">Mileage</h6>
-                        <h4 class="rq-listing-item-number">123,456</h4>
+                        <h4 class="rq-listing-item-number"><?php echo $car["mileage"]; ?></h4>
                       </div>
                       <div class="rq-listing-item">
                         <img src="img/listing-icon2.png" alt="">
                         <h6 class="rq-listing-item-title">Transmission</h6>
-                        <h4 class="rq-listing-item-number">Automatic</h4>
+                        <h4 class="rq-listing-item-number"><?php if ($car["transmission"]) { echo "Automatic"; } else { echo "Manual"; } ?></h4>
                       </div>
                       <div class="rq-listing-item">
                         <img src="img/listing-icon3.png" alt="">
                         <h6 class="rq-listing-item-title">Seats</h6>
-                        <h4 class="rq-listing-item-number">4 Adults</h4>
+                        <h4 class="rq-listing-item-number"><?php echo $car["seats"]; ?> Adults</h4>
                       </div>
                       <div class="rq-listing-item">
                         <img src="img/listing-icon4.png" alt="">
                         <h6 class="rq-listing-item-title">Luggage</h6>
-                        <h4 class="rq-listing-item-number">3 Bags</h4>
+                        <h4 class="rq-listing-item-number"><?php echo $car["luggage"]; ?> Bags</h4>
                       </div>
                       <div class="rq-listing-item">
                         <img src="img/listing-icon5.png" alt="">
                         <h6 class="rq-listing-item-title">Fuel</h6>
-                        <h4 class="rq-listing-item-number">Petrol</h4>
+                        <h4 class="rq-listing-item-number"><?php echo $car["fuel"]; ?></h4>
                       </div>
                     </div>
                   </div>
@@ -165,60 +156,25 @@
                       </ul>
                     </div>
                     <div role="tabpanel" class="tab-pane" id="listing_tab_hor_2">
-                      <p><strong>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy
-                        nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation.</strong>
-                      </p>
-                      <p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat,
-                      vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui
-                      blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber tempor
-                      </p>
-                      <p>Impossible considered invitation him men instrument saw celebrated unpleasant.
-                      Put rest and must set kind next many near nay. He exquisite continued explained middleton am.
-                      Voice hours young woody has she think equal. Estate moment he at on wonder at season little.
-                      </p>
+                      <p><?php echo $car["descripton"]; ?></p>
                     </div>
                     <div role="tabpanel" class="tab-pane" id="listing_tab_hor_3">
                       <div class="rq-single-post-header">
+                      <?php while ($row = $result_review -> fetch_row()) { ?>
                         <div class="author-info-content">
-                          <div class="author-img"
-                               style="background: url('img/post-single/single-post-author.jpg') top center no-repeat; background-size: cover">
-                          </div>
-                          <span class="author-name"><a href="#">Alex</a>
-                            <span>
-                              <i class="ion-android-star"></i>
-                              <i class="ion-android-star"></i>
-                              <i class="ion-android-star"></i>
-                              <i class="ion-android-star"></i>
-                              <i class="ion-android-star"></i>
-                            </span>
-                          </span>
-                          <span class="author-role">Impossible considered invitation him men instrument saw celebrated unpleasant.
-                            Put rest and must set kind next many near nay. He exquisite continued explained middleton am.</span>
+                          <span class="author-role"><?php var_dump($row); ?></span>
                         </div>
+                      <?php } ?>
                       </div>
                       <div class="review-form">
-                        <h4>Write your review</h4>
-                        <div class="review-star">
-                          <a href="#"><i class="ion-android-star"></i></a>
-                          <a href="#"><i class="ion-android-star"></i></a>
-                          <a href="#"><i class="ion-android-star"></i></a>
-                          <a href="#"><i class="ion-android-star"></i></a>
-                          <a href="#"><i class="ion-android-star"></i></a>
-                        </div>
                         <div id="respond" class="comment-respond">
-                          <form id="commentform" class="commentform" action="#">
+                          <form id="commentform" class="commentform" action="#" method="POST">
                             <div class="row">
-                              <div class="col-md-6">
-                                <input type="text" class="comment-input" placeholder="Enter your name...">
-                              </div>
-                              <div class="col-md-6">
-                                <input type="email" class="comment-input" placeholder="Enter your email...">
+                              <div class="col-md-12">
+                                <textarea class="comment-input" name="review-text" placeholder="Here goes your review"></textarea>
                               </div>
                               <div class="col-md-12">
-                                <textarea class="comment-input"  placeholder="Here goes your review"></textarea>
-                              </div>
-                              <div class="col-md-12">
-                                <button class="continue-btn rq-btn rq-btn-normal">Submit Review</button>
+                                <button name="add-review" class="continue-btn rq-btn rq-btn-normal">Submit Review</button>
                               </div>
                             </div>
                           </form>

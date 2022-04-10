@@ -1,3 +1,8 @@
+<?php
+$userid = $_SESSION["userid"];
+
+
+?>
 <header class="header">
     <nav class="navbar navbar-default" id="sticker">
         <div class="container">

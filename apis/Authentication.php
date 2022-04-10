@@ -1,6 +1,6 @@
 <?php
 
-include "connection.php";
+require "connection.php";
 
 $statusMessage = "";
 $added = 0;

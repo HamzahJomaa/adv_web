@@ -1,5 +1,5 @@
 <?php
-session_start();
+require "apis/connection.php";
 $userid = $_SESSION["userid"];
 
 
@@ -133,7 +133,7 @@ $userid = $_SESSION["userid"];
               <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown active">
                   <li><a href="index.php">Home</a></li>
-                  <li><a href="car-listing-grid.html">Car Listing</a></li>
+                  <li><a href="cars.php">Car Listing</a></li>
                   <li><a href="about-us.html">About Us</a></li>
                   <li><a href="contact-us.html">Contact us</a></li>
                 </li>

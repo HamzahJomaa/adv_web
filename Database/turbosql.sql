@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS `turbodb`.`reviews` (
     `userid` INT NOT NULL , --Foreign key--
     `rating` INT NOT NULL ,
     `review` TEXT NOT NULL ,
-    `date` DATE NOT NULL ,
+    `date` DATETIME NOT NULL ,
     PRIMARY KEY (`reviewid`)
     ) ENGINE = InnoDB;
 
