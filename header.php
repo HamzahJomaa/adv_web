@@ -30,9 +30,12 @@
                   <li><a href="contact-us.php">Contact Us</a></li>
                 </li>
                 <?php if (isset($userid)){ ?>
-                      <li class="login-register-link right-side-link"><a href="account.php">
-                              <i class="icon_profile"></i>Account</a>
-                      </li>
+                  <li class="login-register-link right-side-link"><a href="account.php">
+                          <i class="icon_profile"></i>Account</a>
+                  </li>
+                    <li class="login-register-link right-side-link logout"><a href="apis/logout.php">
+                            <i class="icon_close_alt"></i>Logout</a>
+                    </li>
                   <?php } else { ?>
                       <li class="login-register-link right-side-link"><a href="registration.php">
                               <i class="icon_lock-open_alt"></i>Login</a>

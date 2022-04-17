@@ -26924,3 +26924,11 @@ textarea.contact-form-input {
 .details-slider .owl-dots {
 	display: none!important
 }
+
+.logout{
+	margin-left: 0 !important;
+}
+
+.logout a{
+	border-right: none !important;
+}
