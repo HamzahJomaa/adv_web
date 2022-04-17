@@ -34,7 +34,10 @@ if (isset($userid)){
       </div>
     </div>
     <div id="main-wrapper">
-        <?php include "partials/header.php"; ?>
+        <!-- Adding Header -->
+        <?php
+          include("header.php")
+        ?>
       <div class="rq-page-content">
         <div class="rq-content-block">
           <div class="rq-title-container bredcrumb-title small">
@@ -48,16 +51,16 @@ if (isset($userid)){
           </div>
           <div class="rq-registration-content-single"> <!-- start of login form portion -->
             <div class="container">
-              <h4>Login to your account</h4>
-              <p class="subtitle">Login to your account to unlock extra offers.</p>
+              <h4>Login your account</h4>
+              <p class="subtitle">Login to your accounts to discover the great features in this template</p>
               <div class="rq-login-form">
                 <form action="#" method="POST">
                   <div class="row">
                     <div class="col-md-5">
-                      <input type="text" name="email" class="rq-form-control" placeholder="Email or Username">
+                      <input type="text" name="email" class="rq-form-control" placeholder="Your Email / Username">
                     </div>
                     <div class="col-md-5">
-                      <input type="password" name="password" class="rq-form-control"  placeholder="Password">
+                      <input type="password" name="password" class="rq-form-control"  placeholder="Your password">
                     </div>
                     <div class="col-md-2">
                       <button type="submit" name="login" class="rq-btn rq-btn-primary fluid border-radius">Login <i class="arrow_right"></i></button>
@@ -73,10 +76,10 @@ if (isset($userid)){
                       <div class="remember-me">
                         <span class="rq-checkbox">
                           <input type="checkbox" id="remember-me">
-                          <label for="remember-me">Keep me logged in</label>
+                          <label for="remember-me">Keep me loged in</label>
                         </span>
                         <span class="forgotpass">
-                          <a href="#">Forgot your password?</a>
+                          <a href="#">Forgot your password ?</a>
                         </span>
                       </div>
                     </div>
@@ -98,14 +101,16 @@ if (isset($userid)){
           <div class="rq-registration-content-single small-bottom-margin"> <!-- start of registration portion -->
             <div class="container">
               <div class="rq-login-form no-border">
-                <h4>Don't have an account? Register now! </h4>
-                <p>It takes less than 5 minutes to unlock all our special features!</p>
-                <h5>SIGN UP TODAY AND YOU WILL BE ABLE TO FOLLOWING</h5>
+                <h4>Don't have an account! Register now </h4>
+                <p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p>
+                <h5>Sign Up TODAY AND YOU ` LL BE ABLE TO FOLLOWING</h5>
                 <ul class="rq-feature-list">
-                  <li>Register and access all offers</li>
-                  <li>Change and update your profile anytime</li>
-                  <li>Keep records of all your payments</li>
-                  <li>Track your car easily on your profile</li>
+                  <li>Register and access all</li>
+                  <li>Change your profile anytime</li>
+                  <li>Keep a records of all your payment</li>
+                  <li>Create your own Add at protfolio</li>
+                  <li>Track your payment easily at your profile page</li>
+                  <li>Quick registration for facebook, twitter and with Google+</li>
                 </ul>
                 <form class="form-horizontal"  action="#" method="post" >
                   <div class="row">
@@ -125,7 +130,7 @@ if (isset($userid)){
                     <input type="text" class="rq-form-control reverse" name="phone" placeholder="Phone" required>
                   </div>
                   <div class="col-md-4">
-                    <input type="password" class="rq-form-control reverse" name="cpassword" placeholder="Confirm Password" required>
+                    <input type="password" class="rq-form-control reverse" name="cpassword" placeholder="Re - Password" required>
                   </div>
                       <div class="col-md-12">
                           <h4 style="color: <?php echo $added? "green":"red"; ?> "> <?php echo $statusMessage; ?> </h4>
@@ -146,7 +151,7 @@ if (isset($userid)){
                     <li><a href="#" class="ln"><i class="social_linkedin"></i></a></li>
                     <li><a href="#" class="rs"><i class="social_rss"></i></a></li>
                   </ul>
-                <!-- </div> end social icon div -->
+                </div> <!-- end social icon div -->
 
               </div>
             </div>
@@ -154,74 +159,10 @@ if (isset($userid)){
         </div>
       </div>
     </div> <!-- end #main-wrapper -->
-    <footer class="rq-footer">
-      <div class="rq-main-footer">
-        <div class="container">
-          <button class="toggle-widget">Footer widget</button>
-          <div class="footer-widget">
-            <div class="row">
-              <div class="col-md-3 col-sm-3">
-                <div class="widget-list">
-                  <ul>
-                    <!-- <li><a href="#">Site map</a></li> -->
-                    <li><a href="#">Terms & Conditions</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="contact-us.html">Help</a></li>
-                    <!-- <li><a href="#">Affiliate</a></li> -->
-                  </ul>
-                </div>
-              </div>
-              <div class="col-md-3 col-sm-3">
-                <div class="widget-list">
-                  <ul class="address">
-                    <li><a href="about-us.html">Our Location</a></li>
-                    <li><a href="#">Career</a></li>
-                    <li><a href="about-us.html">About</a></li>
-                    <li><a href="contact-us.html">Contact</a></li>
-                  </ul>
-                </div>
-              </div>
-              <div class="col-md-3 col-sm-3">
-                <!-- <div class="widget-list">
-                  <ul class="address">
-                    <li><a href="#">FAQs</a></li>
-                    <li><a href="#">Blog</a></li>
-                    <li><a href="#">Car Blog</a></li>
-                    <li><a href="#">Location</a></li>
-                    <li><a href="#">Press</a></li>
-                  </ul>
-                </div> -->
-              </div>
-              <div class="col-md-3 col-sm-3">
-                <div class="widget-list">
-                  <div class="rq-newsletter">
-                    <h5>Sign up for get our newsletter</h5>
-                    <form action="#">
-                      <input class="fq-newsletter-form" type="text" placeholder="Your Email...">
-                      <button class="rq-btn" type="submit"><i class="ion-android-send"></i></button>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div> <!-- /.rq-main-footer -->
-      <div class="rq-copyright-section">
-        <div class="container">
-          <div class="copyright-content">
-            <p><a href="#"><img src="img/company-logo.png" alt=""></a> © 2016 <a href="#">Turbo, Inc</a>.</p>
-            <ul class="list-unstyled social-list">
-              <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-              <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-              <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-              <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-              <li><a href="#"><i class="fa fa-rss"></i></a></li>
-            </ul>
-          </div>
-        </div>
-      </div> <!-- /.rq-copyright-section -->
-    </footer>
+    <!-- Adding footer -->
+    <?php
+              include("footer.php")
+            ?>
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <script src="js/scripts.js" type="text/javascript"></script>
   </body>
