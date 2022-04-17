@@ -2,6 +2,7 @@
 require "apis/connection.php";
 $userid = $_SESSION["userid"];
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -70,7 +71,7 @@ $userid = $_SESSION["userid"];
               <a href="cars.php">Browse All Cars <i class="ion-ios-arrow-right"></i></a>
             </div>
           </div>
-        
+
         <!-- <div class="rq-content-block gray-bg">
           <div class="container">
             <div class="rq-partners-section">
@@ -81,7 +82,7 @@ $userid = $_SESSION["userid"];
                 <div class="partner-single"><a href="#"><img src="img/partner-logo/partner4.png" alt=""></a></div>
                 <div class="partner-single"><a href="#"><img src="img/partner-logo/partner5.png" alt=""></a></div>
               </div>
-            </div> 
+            </div>
 
           </div> -->
         </div> <!-- /.content block -->
@@ -97,7 +98,7 @@ $userid = $_SESSION["userid"];
             <?php
               include("footer.php")
             ?>
-    
+
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/moment.min.js"></script>
     <script type="text/javascript" src="js/scripts.js" ></script>
