@@ -155,7 +155,7 @@ if (isset($_POST["add-review"])) {
                             <div class="tab-content">
                                 <div role="tabpanel" class="tab-pane active" id="listing_tab_hor_1">
                                     <ul class="rq-listing-lists">
-                                        <li class="checked">Airconditions</li>
+                                        <li class="checked">Air conditioned</li>
                                         <li class="unchecked">Child Seats</li>
                                         <li class="checked">GPS</li>
                                         <li class="checked">Language</li>
@@ -166,8 +166,8 @@ if (isset($_POST["add-review"])) {
                                         <li class="checked">Bluetooth</li>
                                         <li class="unchecked">Onboard computer</li>
                                         <li class="checked">Audio Input</li>
-                                        <li class="unchecked">Long term tips</li>
-                                        <li class="checked">car kit</li>
+                                        <li class="unchecked">Long term trips</li>
+                                        <li class="checked">First Aid Kit</li>
                                         <li class="checked">Remote central looking</li>
                                         <li class="checked">climate control</li>
                                     </ul>
@@ -396,58 +396,51 @@ if (isset($_POST["add-review"])) {
                                 <h3 class="section-title">FAQs</h3>
                                 <div class="rq-faqs">
                                     <div class="faq-single">
-                                        <a href="#" class="faq-title">What is Road tax ?</a>
+                                        <a href="#" class="faq-title">What is road tax?</a>
                                         <p class="hidden-content">
-                                            This is Photoshop's version of Lorem Ipsum. Proin gravida
-                                            nibh vel velit tubo auctor aliquet. Aenean sollicitudin, lorem quis bibendum
-                                            auctor,
-                                            nisi elit exo consequat ipsum, nec sagittis sem nibh id elit.
+                                            Road tax, known by various names around the world, is a tax which has to be paid on, or included with, a motorised vehicle to use it on a public road.
                                         </p>
                                     </div>
                                     <div class="faq-single">
-                                        <a href="#" class="faq-title">How to use Manual Model of Audi R8?</a>
+                                        <a href="#" class="faq-title">What is the Turbo. cancellation policy?</a>
                                         <p class="hidden-content">
-                                            This is Photoshop's version of Lorem Ipsum. Proin gravida
-                                            nibh vel velit tubo auctor aliquet. Aenean sollicitudin, lorem quis bibendum
-                                            auctor,
-                                            nisi elit exo consequat ipsum, nec sagittis sem nibh id elit.
+                                            So long as a cancellation is made at least 48 hours before your reserved pick up date and time, Turbo. will issue a full refund for the amount of your booking. 
+                                            A fee of $75 will apply to any cancellations made within less than 48 hours notice. 
+                                            Bookings are non-refundable if no notice of cancellation is given until after the reserved pick up date/time. 
+                                            All cancellations must be processed by Turbo., not our local car rental suppliers/affiliates.
                                         </p>
                                     </div>
                                     <div class="faq-single">
-                                        <a href="#" class="faq-title">What’s fees that you have to pay ?</a>
+                                        <a href="#" class="faq-title">What kind of insurance is available for my rental car?</a>
                                         <p class="hidden-content">
-                                            This is Photoshop's version of Lorem Ipsum. Proin gravida
-                                            nibh vel velit tubo auctor aliquet. Aenean sollicitudin, lorem quis bibendum
-                                            auctor,
-                                            nisi elit exo consequat ipsum, nec sagittis sem nibh id elit.
+                                            Renting a car might seem like a daunting prospect at first. 
+                                            You may have heard about extra fees and unexpected costs that come with car rental? 
+                                            Well, all of these extra costs have simple explanations and don't have to be hidden from you when you rent a car. 
+                                            It's important to know everything about renting a car before you actually commit to renting. 
+                                            That's where we come in!
                                         </p>
                                     </div>
                                     <div class="faq-single">
-                                        <a href="#" class="faq-title">Problems with your car on road ?</a>
+                                        <a href="#" class="faq-title">Can you guarantee that the car listed on my voucher is the specific car I will receive?</a>
                                         <p class="hidden-content">
-                                            This is Photoshop's version of Lorem Ipsum. Proin gravida
-                                            nibh vel velit tubo auctor aliquet. Aenean sollicitudin, lorem quis bibendum
-                                            auctor,
-                                            nisi elit exo consequat ipsum, nec sagittis sem nibh id elit.
+                                            Like all car rental companies, Turbo. cannot guarantee the make or model of the rental vehicle you will receive; 
+                                            what can be guaranteed is the transmission and size of the vehicle. 
+                                            If you would like a specific make or model we will be more the happy to request it for you, however all car rental companies are unlikely to guarantee specific makes or models outside of luxury/specialty vehicles.
                                         </p>
                                     </div>
                                     <div class="faq-single">
-                                        <a href="#" class="faq-title">How to rent a car from local network?</a>
+                                        <a href="#" class="faq-title">How quickly will my reservation be confirmed?</a>
                                         <p class="hidden-content">
-                                            This is Photoshop's version of Lorem Ipsum. Proin gravida
-                                            nibh vel velit tubo auctor aliquet. Aenean sollicitudin, lorem quis bibendum
-                                            auctor,
-                                            nisi elit exo consequat ipsum, nec sagittis sem nibh id elit.
+                                            Most Turbo. reservations are confirmed within 20 minutes after making payment. 
+                                            If making a last minute reservation (pick up within the next 48 hours) we strongly suggest you contact our reservations center toll free at +961 81 694 185.
                                         </p>
                                     </div>
                                     <div class="faq-single">
-                                        <a href="#" class="faq-title">How long limited to rent car from Turbo on the
-                                            world ?</a>
+                                        <a href="#" class="faq-title">Is there a fee if I need to change my reservation?</a>
                                         <p class="hidden-content">
-                                            This is Photoshop's version of Lorem Ipsum. Proin gravida
-                                            nibh vel velit tubo auctor aliquet. Aenean sollicitudin, lorem quis bibendum
-                                            auctor,
-                                            nisi elit exo consequat ipsum, nec sagittis sem nibh id elit.
+                                            There is no fee to change a car rental booking provided that you contact Turbo. before the end of the rental period. 
+                                            All changes must be processed by Turbo. and not through our local car rental suppliers/affiliates. 
+                                            Changing a reservation may subject you to the current rental rate, as it is at the time of modification.
                                         </p>
                                     </div>
                                 </div>

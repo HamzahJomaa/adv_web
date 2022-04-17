@@ -37,8 +37,8 @@ $userid = $_SESSION["userid"];
           </video>   -->
           <div class="header-overlay"></div>
           <div class="container">
-            <h1>Turbo helps you</h1>
-            <p>Rent a car to move from local hosts in the Middle East.</p>
+            <h1>Turbo. helps you</h1>
+            <p>Rent a car in over 15 cities in the Middle East.</p>
             <div class="rq-search-container">
               <div class="rq-search-single">
                 <div class="rq-search-content">
@@ -761,44 +761,19 @@ $userid = $_SESSION["userid"];
               <div class="col-md-3 col-sm-3">
                 <div class="widget-list">
                   <ul>
-                    <!-- <li><a href="#">Site map</a></li> -->
                     <li><a href="#">Terms & Conditions</a></li>
                     <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Help</a></li>
-                    <!-- <li><a href="#">Affiliate</a></li> -->
+                    <li><a href="contact-us.html">Help</a></li>
                   </ul>
                 </div>
               </div>
               <div class="col-md-3 col-sm-3">
                 <div class="widget-list">
                   <ul class="address">
-                    <li><a href="#">Our Location</a></li>
-                    <li><a href="#">Career</a></li>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Contact</a></li>
+                    <li><a href="about-us.html">Our Location</a></li>
+                    <li><a href="about-us.html">About</a></li>
+                    <li><a href="contact-us.html">Contact</a></li>
                   </ul>
-                </div>
-              </div>
-              <div class="col-md-3 col-sm-3">
-                <div class="widget-list">
-                  <!-- <ul class="address">
-                    <li><a href="#">FAQs</a></li>
-                    <li><a href="#">Blog</a></li>
-                    <li><a href="#">Car Blog</a></li>
-                    <li><a href="#">Location</a></li>
-                    <li><a href="#">Press</a></li>
-                  </ul> -->
-                </div>
-              </div>
-              <div class="col-md-3 col-sm-3">
-                <div class="widget-list">
-                  <div class="rq-newsletter">
-                    <h5>Sign up for get our newsletter</h5>
-                    <form action="#">
-                      <input class="fq-newsletter-form" type="text" placeholder="Your Email...">
-                      <button class="rq-btn" type="submit"><i class="ion-android-send"></i></button>
-                    </form>
-                  </div>
                 </div>
               </div>
             </div>
@@ -809,7 +784,7 @@ $userid = $_SESSION["userid"];
       <div class="rq-copyright-section">
         <div class="container">
           <div class="copyright-content">
-            <p><a href="#"><img src="img/company-logo.png" alt=""></a> © 2016 <a href="#">Turbo, Inc</a>.</p>
+            <p><a href="#"><img src="img/company-logo.png" alt=""></a> © 2016 <a href="index.php">Turbo, Inc</a>.</p>
             <ul class="list-unstyled social-list">
               <li><a href="#"><i class="fa fa-twitter"></i></a></li>
               <li><a href="#"><i class="fa fa-facebook"></i></a></li>

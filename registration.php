@@ -48,16 +48,16 @@ if (isset($userid)){
           </div>
           <div class="rq-registration-content-single"> <!-- start of login form portion -->
             <div class="container">
-              <h4>Login your account</h4>
-              <p class="subtitle">Login to your accounts to discover the great features in this template</p>
+              <h4>Login to your account</h4>
+              <p class="subtitle">Login to your account to unlock extra offers.</p>
               <div class="rq-login-form">
                 <form action="#" method="POST">
                   <div class="row">
                     <div class="col-md-5">
-                      <input type="text" name="email" class="rq-form-control" placeholder="Your Email / Username">
+                      <input type="text" name="email" class="rq-form-control" placeholder="Email or Username">
                     </div>
                     <div class="col-md-5">
-                      <input type="password" name="password" class="rq-form-control"  placeholder="Your password">
+                      <input type="password" name="password" class="rq-form-control"  placeholder="Password">
                     </div>
                     <div class="col-md-2">
                       <button type="submit" name="login" class="rq-btn rq-btn-primary fluid border-radius">Login <i class="arrow_right"></i></button>
@@ -73,10 +73,10 @@ if (isset($userid)){
                       <div class="remember-me">
                         <span class="rq-checkbox">
                           <input type="checkbox" id="remember-me">
-                          <label for="remember-me">Keep me loged in</label>
+                          <label for="remember-me">Keep me logged in</label>
                         </span>
                         <span class="forgotpass">
-                          <a href="#">Forgot your password ?</a>
+                          <a href="#">Forgot your password?</a>
                         </span>
                       </div>
                     </div>
@@ -98,16 +98,14 @@ if (isset($userid)){
           <div class="rq-registration-content-single small-bottom-margin"> <!-- start of registration portion -->
             <div class="container">
               <div class="rq-login-form no-border">
-                <h4>Don't have an account! Register now </h4>
-                <p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p>
-                <h5>Sign Up TODAY AND YOU ` LL BE ABLE TO FOLLOWING</h5>
+                <h4>Don't have an account? Register now! </h4>
+                <p>It takes less than 5 minutes to unlock all our special features!</p>
+                <h5>SIGN UP TODAY AND YOU WILL BE ABLE TO FOLLOWING</h5>
                 <ul class="rq-feature-list">
-                  <li>Register and access all</li>
-                  <li>Change your profile anytime</li>
-                  <li>Keep a records of all your payment</li>
-                  <li>Create your own Add at protfolio</li>
-                  <li>Track your payment easily at your profile page</li>
-                  <li>Quick registration for facebook, twitter and with Google+</li>
+                  <li>Register and access all offers</li>
+                  <li>Change and update your profile anytime</li>
+                  <li>Keep records of all your payments</li>
+                  <li>Track your car easily on your profile</li>
                 </ul>
                 <form class="form-horizontal"  action="#" method="post" >
                   <div class="row">
@@ -127,7 +125,7 @@ if (isset($userid)){
                     <input type="text" class="rq-form-control reverse" name="phone" placeholder="Phone" required>
                   </div>
                   <div class="col-md-4">
-                    <input type="password" class="rq-form-control reverse" name="cpassword" placeholder="Re - Password" required>
+                    <input type="password" class="rq-form-control reverse" name="cpassword" placeholder="Confirm Password" required>
                   </div>
                       <div class="col-md-12">
                           <h4 style="color: <?php echo $added? "green":"red"; ?> "> <?php echo $statusMessage; ?> </h4>
@@ -148,7 +146,7 @@ if (isset($userid)){
                     <li><a href="#" class="ln"><i class="social_linkedin"></i></a></li>
                     <li><a href="#" class="rs"><i class="social_rss"></i></a></li>
                   </ul>
-                </div> <!-- end social icon div -->
+                <!-- </div> end social icon div -->
 
               </div>
             </div>
@@ -168,7 +166,7 @@ if (isset($userid)){
                     <!-- <li><a href="#">Site map</a></li> -->
                     <li><a href="#">Terms & Conditions</a></li>
                     <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Help</a></li>
+                    <li><a href="contact-us.html">Help</a></li>
                     <!-- <li><a href="#">Affiliate</a></li> -->
                   </ul>
                 </div>
@@ -176,10 +174,10 @@ if (isset($userid)){
               <div class="col-md-3 col-sm-3">
                 <div class="widget-list">
                   <ul class="address">
-                    <li><a href="#">Our Location</a></li>
+                    <li><a href="about-us.html">Our Location</a></li>
                     <li><a href="#">Career</a></li>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Contact</a></li>
+                    <li><a href="about-us.html">About</a></li>
+                    <li><a href="contact-us.html">Contact</a></li>
                   </ul>
                 </div>
               </div>
