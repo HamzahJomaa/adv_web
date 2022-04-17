@@ -34,7 +34,7 @@ $userid = $_SESSION["userid"];
             ?>
       <div class="rq-page-content">
         <div class="rq-content-block gray-bg">
-          <span class="bg-large-text">Turbo</span>
+          <!-- <span class="bg-large-text">Turbo</span> -->
           <div class="container">
             <div class="row">
               <div class="col-md-11">
@@ -67,8 +67,69 @@ $userid = $_SESSION["userid"];
               </div>
             </div>
             <div class="rq-browse-section">
-              <h1 class="rq-title">Top Our Cars<span class="rq-dot">.</span></h1>
+              <div class="rq-content-block gray-bg" id="services">
+          <div class="rq-title-container text-center">
+            <h2 class="rq-title no-padding">Our <strong>Top </strong>Cars.</h2>
+          </div>
+          <div class="rq-how-it-work-content">
+            <div class="container">
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="how-it-work-single" style="box-shadow: 0 24px 34px -14px rgba(0, 0, 0, .3);">
+                    <img src="img/cars/elentra-front-side-view.jpg" alt="" style="width: 250px; height: 150px; justify-content: center;">
+                    <a href="cars.php"><h4>Sedans</h4></a>
+                    <p>Hyundai Elantra</p>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="how-it-work-single" style="box-shadow: 0 24px 34px -14px rgba(0, 0, 0, .3);">
+                    <img src="img/cars/crv-front-side-view2.jpg" alt="" style="width: 250px; height: 150px; justify-content: center;">
+                    <a href="cars.php"><h4>SUVs</h4></a>
+                    <p>Honda CR-V</p>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="how-it-work-single" style="box-shadow: 0 24px 34px -14px rgba(0, 0, 0, .3);">
+                    <img src="img/cars/ford-front-view.jpg" alt="" style="width: 250px; height: 150px; justify-content: center;">
+                    <a href="cars.php"><h4>Sports Cars</h4></a>
+                    <p>Ford GT 500</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
               <a href="cars.php">Browse All Cars <i class="ion-ios-arrow-right"></i></a>
+            </div>
+          </div>
+          <div class="rq-content-block gray-bg" id="services">
+          <div class="rq-title-container text-center">
+            <h2 class="rq-title no-padding">How it <strong>Works.</strong></h2>
+          </div>
+          <div class="rq-how-it-work-content">
+            <div class="container">
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="how-it-work-single">
+                    <img src="img/icon1.png" alt="">
+                    <h4>Select Time<br> Pick Up & Return</h4>
+                    <p>Select location, pick up time, return and car type</p>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="how-it-work-single">
+                    <img src="img/icon2.png" alt="">
+                    <h4>find all<br>cars near you</h4>
+                    <p>Find all our available cars for rent near your current lo</p>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="how-it-work-single">
+                    <img src="img/icon3.png" alt="">
+                    <h4>pick a car<br>and enjoy your trip</h4>
+                    <p>Pick a car that you want<br>and enjoy your trip</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 

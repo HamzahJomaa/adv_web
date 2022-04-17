@@ -34,7 +34,7 @@
           <div class="copyright-content">
             <p><a href="#"><img src="img/company-logo.png" alt=""></a> © 2016 <a href="index.php">Turbo, Inc</a>.</p>
             <ul class="list-unstyled social-list">
-              <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+              <li><a href="https://twitter.com/MeTurbo_"><i class="fa fa-twitter"></i></a></li>
               <li><a href="#"><i class="fa fa-facebook"></i></a></li>
               <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
               <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
