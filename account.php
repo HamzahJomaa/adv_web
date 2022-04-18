@@ -47,55 +47,19 @@ $account = $result_account->fetch_array();
     <div id="main-wrapper">
 <!-- Adding Special different Header -->
         
-      <header class="header">
-        <nav class="navbar navbar-default" id="sticker">
-          <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                                                                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
-              <a class="navbar-brand" href="index.php"><img src="./img/company-logo.png" alt=""/></a>
-            </div>
-
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-              <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown active">
-                  <li><a href="index.php">Home</a></li>
-                  <li><a href="cars.php">Car Listing</a></li>
-                  <li><a href="about-us.php">About Us</a></li>
-                  <li><a href="contact-us.php">Contact Us</a></li>
-                </li>
-                    <li class="login-register-link right-side-link logout"><a href="apis/logout.php">
-                            <i class="icon_close_alt"></i>Logout</a>
-                    </li>
-              </ul>
-            </div><!-- /.navbar-collapse -->
-          </div><!-- /.container-fluid -->
-        </nav>
-      </header> 
-        <!-- end header -->
+        <?php include "header.php"; ?>
 
         <!-- Body Content -->
         <h1 style="text-align:center">Profile Page</h1>
         
     <div class="account-div">
-        <?php
-            if($_SESSION["userid"]){
-                print "<h2>Welcome back ". $account["name"]."</h2>";
-            }
-        ?>
-      <h4 class="account-info">Account Information: </h4>
-      <h3 class="info">Name:</h3> <?php print $account['name']; ?>
-      <h3 class="info">E-mail:</h3> <?php print $account['email']; ?>
-      <h3 class="info">Phone Number:</h3> <?php print $account['phone_number']; ?>
-      <h3 class="info">Username:</h3> <?php print $account['username']; ?><br>
-    <a href="account_change.php" name="updatebtn" class="rq-btn rq-btn-primary border-radius">Update Profile <i class="arrow_right"></i></a>
+        <?php if($_SESSION["userid"]){ echo "<h2>Welcome back ". $account["name"]."</h2>";} ?>
+        <h4 class="account-info">Account Information: </h4>
+        <div class="account-field"> <h3 class="info">Name:</h3> <?php print $account['name']; ?> </div>
+        <div class="account-field"> <h3 class="info">Email Address:</h3> <?php print $account['email']; ?> </div>
+        <div class="account-field"> <h3 class="info">Phone Number:</h3> <?php print $account['phone_number']; ?> </div>
+        <div class="account-field"> <h3 class="info">Username:</h3> <?php print $account['username']; ?> </div>
+        <a href="account_change.php" name="updatebtn" class="rq-btn rq-btn-primary border-radius">Update Profile <i class="arrow_right"></i></a>
     </div>
     <br>
 <!-- ------------------------------------ -->

@@ -26940,23 +26940,33 @@ textarea.contact-form-input {
 .account-div{
 	/* width: 350px; */
 	padding: 10px;
-	margin: 0;
   	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   	text-align: center;
 	font-size: 15px;
 	color: #f0a835;;
-	margin: auto;
+	margin-right: auto;
+	margin-left: auto;
   	width: 50%;
 	justify-content: center;
 }
 
 .account-info{
-	text-align: left;
 	text-decoration: underline;
 }
+
+.account-field{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	width: 50%;
+	margin-right: auto;
+	margin-left: auto;
+}
+
 
 .info{
 	color: #000;
 	font-size: large;
+	margin-right: 1rem;
 }
 

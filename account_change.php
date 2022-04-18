@@ -6,16 +6,29 @@ $userid = $_SESSION["userid"];
 $account_info= "SELECT * FROM user where userid = '". $userid ."'";
 $result_account = $connection->query($account_info);
 $account = $result_account->fetch_array();
+$message = "";
+$status = 0;
 
-if(count($_POST)>0) {
-    $result = mysqli_query($con,"SELECT *from user WHERE userid='" . $userid . "'");
-    $row=mysqli_fetch_array($result);
-    if($_POST["currentPassword"] == $row["password"] && $_POST["newPassword"] == $row["confirmPassword"] ) {
-    mysqli_query($con,"UPDATE user set password='" . $_POST["newPassword"] . "' WHERE userid='" . $userid . "'");
-    $message = "Password Changed Sucessfully";
-    } else{
-     $message = "Password is not correct";
-    }}
+if (isset($_POST["reset_password"])) {
+
+     $oldpassword = $_POST["currentPassword"];
+     $newpassword = $_POST["newpassword"];
+     if (password_verify($oldpassword,$account["password"])){
+        $hashedPassword = password_hash($newpassword,PASSWORD_DEFAULT);
+        $query1 = $connection->prepare("UPDATE user SET password=? WHERE userid=?");
+        $query1->bind_param('si',$hashedPassword, $userid);
+        if (!$query1->execute()) {
+            $message = $connection->error;
+            $status = 0;
+        } else {
+            $message = "User Updated Successfully";
+            $status = 1;
+        }
+     }else{
+      $message = "Current Password is Error";
+      $status = 0;
+     }
+}
 ?>
 
 <!DOCTYPE html>
@@ -69,18 +82,18 @@ if(count($_POST)>0) {
     <br><br>
     <div class="account-div">
     <h3>CHANGE PASSWORD</h3>
-        <div><?php if(isset($message)) { echo $message; } ?></div>
+        <div><h6 style="color: <?php echo $status ? "green" : "red" ; ?>"><?php echo $message;?></h6></div>
         <form method="post" action="#">
             Current Password:<br>
             <input type="password" name="currentPassword"><span id="currentPassword" class="required"></span>
             <br>
             New Password:<br>
-            <input type="password" name="newPassword"><span id="newPassword" class="required"></span>
+            <input type="password" name="newpassword"><span id="newPassword" class="required"></span>
             <br>
             Confirm Password:<br>
             <input type="password" name="confirmPassword"><span id="confirmPassword" class="required"></span>
             <br><br>
-            <input type="submit">
+            <input name="reset_password" type="submit">
         </form>
         </div>
 <!-- ------------------------------------ -->
