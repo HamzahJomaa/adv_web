@@ -21708,7 +21708,7 @@ h1.rq-title {
 
 .rq-mission-block,
 .rq-tips-tricks .rq-tips-single:hover {
-	box-shadow: 0 24px 34px -14px rgba(0, 0, 0, .3)
+	box-shadow: 0 24px 34px -14px rgba(0, 0, 0, .3);
 }
 
 .rq-pagination .rq-pagination-list li a.center-dot {
@@ -22851,7 +22851,7 @@ textarea.comment-input:-ms-input-placeholder {
 	background: #fff;
 	text-align: center;
 	margin-bottom: 25px;
-	border-radius: 4px
+	border-radius: 4px;
 }
 
 @media (max-width:1200px) {

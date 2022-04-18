@@ -148,11 +148,10 @@ if (isset($_POST["add-review"])) {
                                                                           aria-controls="listing_tab_hor_1" role="tab"
                                                                           data-toggle="tab">Features</a></li>
                                 <li role="presentation"><a href="#listing_tab_hor_2" aria-controls="listing_tab_hor_2"
-                                                           role="tab" data-toggle="tab">Descriptions</a></li>
+                                                           role="tab" data-toggle="tab">Description</a></li>
                                 <li role="presentation"><a href="#listing_tab_hor_3" aria-controls="listing_tab_hor_3"
                                                            role="tab"
-                                                           data-toggle="tab">Reviews(<?php echo $review_count["review_count"]; ?>
-                                        )</a></li>
+                                                           data-toggle="tab">Reviews (<?php echo $review_count["review_count"]; ?>)</a></li>
                             </ul>
                             <!-- Tab panes -->
                             <div class="tab-content">
