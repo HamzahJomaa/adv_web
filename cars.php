@@ -1,5 +1,6 @@
 <?php
 require "apis/connection.php";
+
 $page = $_GET["page"];
 if (!isset($page)){
   $page = 1;
@@ -78,9 +79,9 @@ $cartype_result = $connection->query($type_sql);
       </div>
     </div>
     <div id="main-wrapper">
-              <!-- Adding Header -->
-              <?php
-              include("header.php")
+            <!-- Adding Header -->
+            <?php
+            include("header.php")
             ?>
       <div class="inner-page-banner" style="background: url('img/inner-banner/listing-banner.jpg') top center no-repeat; background-size: cover;">
         <div class="rq-overlay"></div>

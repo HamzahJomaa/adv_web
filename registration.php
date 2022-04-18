@@ -1,8 +1,8 @@
 <?php
 include "apis/Authentication.php";
-
+if(isset($_SESSION["userid"])){
 $userid = $_SESSION["userid"];
-
+}
 if (isset($userid)){
     header("Location: ./");
 }
@@ -78,9 +78,9 @@ if (isset($userid)){
                           <input type="checkbox" id="remember-me">
                           <label for="remember-me">Keep me loged in</label>
                         </span>
-                        <span class="forgotpass">
+                        <!-- <span class="forgotpass">
                           <a href="#">Forgot your password ?</a>
-                        </span>
+                        </span> -->
                       </div>
                     </div>
                   </div>
@@ -89,10 +89,7 @@ if (isset($userid)){
                   <h5>or login with</h5>
                   <ul class="social-page-nav">
                     <li><a href="#" class="fb"><i class="social_facebook"></i></a></li>
-                    <li><a href="#" class="tw"><i class="social_twitter"></i></a></li>
                     <li><a href="#" class="gp"><i class="social_googleplus"></i></a></li>
-                    <li><a href="#" class="ln"><i class="social_linkedin"></i></a></li>
-                    <li><a href="#" class="rs"><i class="social_rss"></i></a></li>
                   </ul>
                 </div> <!-- end social icon div -->
               </div> <!-- end login div -->
@@ -102,14 +99,13 @@ if (isset($userid)){
             <div class="container">
               <div class="rq-login-form no-border">
                 <h4>Don't have an account! Register now </h4>
-                <p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p>
                 <h5>Sign Up TODAY AND YOU ` LL BE ABLE TO FOLLOWING</h5>
                 <ul class="rq-feature-list">
                   <li>Register and access all</li>
                   <li>Change your profile anytime</li>
                   <li>Keep a records of all your payment</li>
-                  <li>Create your own Add at protfolio</li>
-                  <li>Track your payment easily at your profile page</li>
+                  <!-- <li>Create your own Add at protfolio</li> -->
+                  <!-- <li>Track your payment easily at your profile page</li> -->
                   <li>Quick registration for facebook, twitter and with Google+</li>
                 </ul>
                 <form class="form-horizontal"  action="#" method="post" >
@@ -142,16 +138,6 @@ if (isset($userid)){
                   </div>
                   </div> <!-- end of registration section -->
                 </form>
-                <div class="social-login"> <!-- start social icon div -->
-                  <h5>or register with</h5>
-                  <ul class="social-page-nav">
-                    <li><a href="#" class="fb"><i class="social_facebook"></i></a></li>
-                    <li><a href="#" class="tw"><i class="social_twitter"></i></a></li>
-                    <li><a href="#" class="gp"><i class="social_googleplus"></i></a></li>
-                    <li><a href="#" class="ln"><i class="social_linkedin"></i></a></li>
-                    <li><a href="#" class="rs"><i class="social_rss"></i></a></li>
-                  </ul>
-                </div> <!-- end social icon div -->
 
               </div>
             </div>
@@ -159,10 +145,10 @@ if (isset($userid)){
         </div>
       </div>
     </div> <!-- end #main-wrapper -->
-    <!-- Adding footer -->
-    <?php
-              include("footer.php")
-            ?>
+        <!-- Adding footer -->
+        <?php
+          include("footer.php")
+        ?>
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <script src="js/scripts.js" type="text/javascript"></script>
   </body>

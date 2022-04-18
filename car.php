@@ -99,7 +99,7 @@ if (isset($_POST["add-review"])) {
                         <h1 class="rq-title light"><?php echo $car["carname"]; ?></h1>
                         <ol class="breadcrumb secondary rq-subtitle">
                             <li><a href="index.php">Home</a></li>
-                            <li><a href="./cars.php">Car listing</a></li>
+                            <li><a href="cars.php">Car listing</a></li>
                             <li class="active">Car Listing Details</li>
                         </ol>
                     </div> <!-- end of breadcrumb -->

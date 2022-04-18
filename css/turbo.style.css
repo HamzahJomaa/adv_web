@@ -26932,3 +26932,31 @@ textarea.contact-form-input {
 .logout a{
 	border-right: none !important;
 }
+
+.account-head{
+	text-align: center;
+}
+
+.account-div{
+	/* width: 350px; */
+	padding: 10px;
+	margin: 0;
+  	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  	text-align: center;
+	font-size: 15px;
+	color: #f0a835;;
+	margin: auto;
+  	width: 50%;
+	justify-content: center;
+}
+
+.account-info{
+	text-align: left;
+	text-decoration: underline;
+}
+
+.info{
+	color: #000;
+	font-size: large;
+}
+

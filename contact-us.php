@@ -72,8 +72,8 @@
                       <div class="grid-block-single">
                         <i class="icon_mail_alt"></i>
                         <h3>Email</h3>
+                        <p>customerservice.turbo@gmail.com</p>
                         <p>info@turbome.com</p>
-                        <p>customer-service@turbome.com</p>
                       </div>
                     </div>
                   </div>
@@ -81,7 +81,7 @@
 
             <div class="rq-contact-us-form-content"> <!-- start message form -->
               <h3>If you have any questions <br>please do not hesitate to send us a message</h3>
-              <form action="#">
+              <form action="https://formsubmit.co/customerservice.turbo@gmail.com">
                 <input type="text" class="contact-form-input" placeholder="Your name">
                 <input type="email" class="contact-form-input" placeholder="Your email">
                 <input type="text" class="contact-form-input" placeholder="Subject">
@@ -98,11 +98,12 @@
         </div>
       </div>
     </div> <!-- end #main-wrapper -->
-      <!-- Adding Header -->
+      <!-- Adding Footer -->
       <?php
-        include("header.php")
+        include("footer.php")
       ?>
     <script type="text/javascript" src="js/jquery.min.js"></script>
+    <!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDsPTEcgKkdos0MAoBi65IVJvoNAl9HzSI&callback=initMap"> -->
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0QI6vd531_4xsTobCg_J1_6BZOEolRbs&libraries=visualization&callback=initMap">
     </script>
     <script src="js/customMap.js" type="text/javascript"></script>

@@ -1,6 +1,8 @@
 <?php
 require "apis/connection.php";
-$userid = $_SESSION["userid"];
+  if(isset($_SESSION["userid"])){
+    $userid = $_SESSION["userid"];
+  }
 ?>
 
 <!DOCTYPE html>
@@ -27,14 +29,16 @@ $userid = $_SESSION["userid"];
         <div class="cube2"></div>
       </div>
     </div>
-
+      <!-- <video autoplay muted loop>
+            <source src= "./img/Information/Cars-coming.mp4" >
+          </video>   -->
             <!-- Adding Header -->
             <?php
               include("header.php")
             ?>
       <div class="rq-page-content">
         <div class="rq-content-block gray-bg">
-          <span class="bg-large-text">Turbo</span>
+          <!-- <span class="bg-large-text">Turbo</span> -->
           <div class="container">
             <div class="row">
               <div class="col-md-11">

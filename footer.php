@@ -11,16 +11,16 @@
                   <ul>
                     <li><a href="#">Terms & Conditions</a></li>
                     <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="contact-us.html">Help</a></li>
+                    <li><a href="contact-us.php">Help</a></li>
                   </ul>
                 </div>
               </div>
               <div class="col-md-3 col-sm-3">
                 <div class="widget-list">
                   <ul class="address">
-                    <li><a href="about-us.html">Our Location</a></li>
-                    <li><a href="about-us.html">About</a></li>
-                    <li><a href="contact-us.html">Contact</a></li>
+                    <li><a href="contact-us.php">Our Location</a></li>
+                    <li><a href="about-us.php">About</a></li>
+                    <li><a href="contact-us.php">Contact</a></li>
                   </ul>
                 </div>
               </div>
@@ -32,13 +32,13 @@
       <div class="rq-copyright-section">
         <div class="container">
           <div class="copyright-content">
-            <p><a href="#"><img src="img/company-logo.png" alt=""></a> © 2016 <a href="index.php">Turbo, Inc</a>.</p>
+            <p><a href="index.php"><img src="img/company-logo.png" alt=""></a> © 2016 <a href="index.php">Turbo, Inc</a>.</p>
             <ul class="list-unstyled social-list">
-              <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+              <li><a href="https://twitter.com/MeTurbo_"><i class="fa fa-twitter"></i></a></li>
               <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-              <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-              <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-              <li><a href="#"><i class="fa fa-rss"></i></a></li>
+              <li><a href="https://www.instagram.com/turbo_me_/"><i class="fa fa-instagram"></i></a></li>
+              <li><a href="https://www.linkedin.com/in/turbo-me-785116238/"><i class="fa fa-linkedin"></i></a></li>
+              <li><a href="https://github.com/HamzahJomaa/adv_web"><i class="fa fa-github"></i></a></li>
             </ul>
           </div>
         </div>
