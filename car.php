@@ -29,7 +29,7 @@ $added = 0;
 if (isset($_POST["add-review"])) {
  $reviewtext = $_POST["review-text"];
  $date = date("Y-m-d h:i:s");
- $rating = 4;
+ $rating = $_POST["rate"];
  $insert_query = $connection->prepare("INSERT INTO `reviews`(`carid`, `userid`, `rating`, `review`, `date`) VALUES (?,?,?,?,?)");
  $insert_query->bind_param("sssss", $id, $userid, $rating, $reviewtext, $date);
  if (!$insert_query->execute()) {
@@ -37,7 +37,19 @@ if (isset($_POST["add-review"])) {
   $statusMessage = $connection->error;
   $added = 0;
  } else {
+  $car_sql = " SELECT * FROM cars WHERE carid='" . $id . "'";
+  $result_car = $connection->query($car_sql);
+  $car = $result_car->fetch_array();
+
   $statusMessage = "Review Added Successfully";
+  $review_count_sql = " SELECT COUNT(*) as review_count FROM reviews WHERE carid='" . $id . "'";
+  $result_count = $connection->query($review_count_sql);
+  $review_count = $result_count->fetch_array();
+
+
+  $review_sql = "SELECT rating,review,user.name,date FROM reviews INNER JOIN user on user.userid = reviews.userid WHERE carid='" . $id . "'";
+  $result_review = $connection->query($review_sql);
+
   $added = 1;
  }
 }
@@ -210,6 +222,9 @@ if (isset($_POST["add-review"])) {
                                         <div id="respond" class="comment-respond">
                                             <form id="commentform" class="commentform" action="#" method="POST">
                                                 <div class="row">
+                                                    <div class="col-md-12">
+                                                        <input class="comment-input" type="number" min="0" max="5"  name="rate" id="" placeholder="rate" />
+                                                    </div>
                                                     <div class="col-md-12">
                                                         <textarea class="comment-input" name="review-text"
                                                                   placeholder="Here goes your review"></textarea>
